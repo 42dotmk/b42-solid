@@ -19,7 +19,6 @@
     "vinxi": "^0.5.7"
   },
   "devDependencies": {
-    "@rolldown/binding-darwin-arm64": "^1.0.0-rc.11",
     "@tailwindcss/vite": "^4.0.7",
     "tailwindcss": "^4.0.7"
   },
