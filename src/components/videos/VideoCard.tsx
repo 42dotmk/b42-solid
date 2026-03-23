@@ -1,4 +1,4 @@
-import { Calendar, Eye, Play } from "lucide-solid";
+import { Icon } from "@iconify-icon/solid";
 import { For, Show } from "solid-js";
 import { getYouTubeThumbnail, getYouTubeWatchUrl } from "~/lib/youtube";
 import { formatDate } from "~/lib/utils";
@@ -34,7 +34,7 @@ export default function VideoCard(props: VideoCardProps) {
 
           <div class="absolute inset-0 flex items-center justify-center bg-dark-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
             <div class="w-16 h-16 rounded-full bg-primary flex items-center justify-center transform scale-90 group-hover:scale-100 transition-transform duration-300">
-              <Play class="w-7 h-7 text-dark-900 ml-1" fill="currentColor" />
+              <Icon icon="lucide:play" class="w-7 h-7 text-dark-900 ml-1" />
             </div>
           </div>
 
@@ -65,12 +65,12 @@ export default function VideoCard(props: VideoCardProps) {
           <p class="text-sm text-text-muted line-clamp-2">{props.video.description}</p>
           <div class="flex items-center gap-4 text-text-muted text-xs">
             <span class="flex items-center gap-1.5">
-              <Calendar class="w-3.5 h-3.5" />
+              <Icon icon="lucide:calendar" class="w-3.5 h-3.5" />
               {formatDate(props.video.publishedAt, "MMM d, yyyy")}
             </span>
             <Show when={props.video.viewCount}>
               <span class="flex items-center gap-1.5">
-                <Eye class="w-3.5 h-3.5" />
+                <Icon icon="lucide:eye" class="w-3.5 h-3.5" />
                 {props.video.viewCount}
               </span>
             </Show>

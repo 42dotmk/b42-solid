@@ -1,4 +1,4 @@
-import { LoaderCircle } from "lucide-solid";
+import { Icon } from "@iconify-icon/solid";
 import { createSignal, For } from "solid-js";
 import Reveal from "~/components/common/Reveal";
 import Button from "~/components/ui/Button";
@@ -55,7 +55,7 @@ export default function PastEventsList(props: PastEventsListProps) {
           <Button variant="outline" onClick={loadMore} disabled={loading()}>
             {loading() ? (
               <>
-                <LoaderCircle class="w-4 h-4 animate-spin" />
+                <Icon icon="lucide:loader-circle" class="w-4 h-4 animate-spin" />
                 Loading...
               </>
             ) : (

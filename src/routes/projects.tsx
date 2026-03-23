@@ -1,6 +1,6 @@
+import { Icon } from "@iconify-icon/solid";
 import { Meta, Title } from "@solidjs/meta";
 import { A } from "@solidjs/router";
-import { ArrowLeft, Code, Github, MessageSquare, Star } from "lucide-solid";
 import { For } from "solid-js";
 import Reveal from "~/components/common/Reveal";
 import Button from "~/components/ui/Button";
@@ -21,7 +21,7 @@ export default function ProjectsPage() {
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <Reveal>
             <A href="/" class="inline-flex items-center gap-2 text-text-muted hover:text-primary transition-colors mb-8">
-              <ArrowLeft class="w-4 h-4" />
+              <Icon icon="lucide:arrow-left" class="w-4 h-4" />
               Back to Home
             </A>
           </Reveal>
@@ -38,13 +38,13 @@ export default function ProjectsPage() {
               <div class="flex flex-wrap gap-4">
                 <a href="https://github.com/42dotmk" target="_blank" rel="noopener noreferrer">
                   <Button>
-                    <Github class="w-4 h-4" />
+                    <Icon icon="lucide:github" class="w-4 h-4" />
                     View All on GitHub
                   </Button>
                 </a>
                 <a href="https://discord.gg/424xxTZVYX" target="_blank" rel="noopener noreferrer">
                   <Button variant="outline">
-                    <MessageSquare class="w-4 h-4" />
+                    <Icon icon="lucide:message-square" class="w-4 h-4" />
                     Join Discord to Contribute
                   </Button>
                 </a>
@@ -106,7 +106,7 @@ export default function ProjectsPage() {
                         <div class="flex flex-col lg:flex-row lg:items-start gap-6">
                           <div class="flex items-start gap-4 lg:w-1/3">
                             <div class="p-4 rounded-xl bg-dark-700 text-primary group-hover:bg-primary/10 transition-colors">
-                              <project.icon class="w-8 h-8" />
+                              <Icon icon={project.icon} class="w-8 h-8" />
                             </div>
                             <div class="flex-1">
                               <div class="flex items-center gap-2 mb-1">
@@ -123,7 +123,7 @@ export default function ProjectsPage() {
                                   {project.language}
                                 </span>
                                 <span class="flex items-center gap-1">
-                                  <Star class="w-3.5 h-3.5" />
+                                  <Icon icon="lucide:star" class="w-3.5 h-3.5" />
                                   {project.stars}
                                 </span>
                                 <span class={difficultyColors[project.difficulty] || "text-text-muted"}>{project.difficulty}</span>
@@ -151,13 +151,13 @@ export default function ProjectsPage() {
                             <div class="flex gap-2 lg:justify-end">
                               <a href={project.github} target="_blank" rel="noopener noreferrer">
                                 <Button variant="outline" size="sm">
-                                  <Github class="w-4 h-4" />
+                                  <Icon icon="lucide:github" class="w-4 h-4" />
                                   View Code
                                 </Button>
                               </a>
                               <a href={`${project.github}/issues`} target="_blank" rel="noopener noreferrer">
                                 <Button size="sm">
-                                  <Code class="w-4 h-4" />
+                                  <Icon icon="lucide:code" class="w-4 h-4" />
                                   Issues
                                 </Button>
                               </a>
@@ -185,7 +185,7 @@ export default function ProjectsPage() {
                   <div class="flex flex-wrap justify-center gap-4">
                     <a href="https://discord.gg/424xxTZVYX" target="_blank" rel="noopener noreferrer">
                       <Button size="lg">
-                        <MessageSquare class="w-5 h-5" />
+                        <Icon icon="lucide:message-square" class="w-5 h-5" />
                         Pitch Your Idea on Discord
                       </Button>
                     </a>

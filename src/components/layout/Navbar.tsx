@@ -1,5 +1,5 @@
+import { Icon } from "@iconify-icon/solid";
 import { A, useLocation } from "@solidjs/router";
-import { CalendarPlus, ExternalLink, Menu, X } from "lucide-solid";
 import { For, Show, createSignal, onCleanup, onMount } from "solid-js";
 import { externalLinks, navLinks } from "~/data/site";
 import { cn } from "~/lib/utils";
@@ -62,14 +62,14 @@ export default function Navbar() {
           <div class="hidden md:flex items-center gap-3">
             <A href="/book">
               <Button size="sm" variant="outline">
-                <CalendarPlus class="w-3.5 h-3.5" />
+                <Icon icon="lucide:calendar-plus" class="w-3.5 h-3.5" />
                 Book Space
               </Button>
             </A>
             <a href="https://wts.sh" target="_blank" rel="noopener noreferrer">
               <Button size="sm">
                 GET TIX
-                <ExternalLink class="w-3 h-3" />
+                <Icon icon="lucide:external-link" class="w-3 h-3" />
               </Button>
             </a>
           </div>
@@ -79,8 +79,8 @@ export default function Navbar() {
             onClick={() => setIsOpen(!isOpen())}
             aria-label={isOpen() ? "Close menu" : "Open menu"}
           >
-            <Show when={isOpen()} fallback={<Menu class="w-6 h-6" />}>
-              <X class="w-6 h-6" />
+            <Show when={isOpen()} fallback={<Icon icon="lucide:menu" class="w-6 h-6" />}>
+              <Icon icon="lucide:x" class="w-6 h-6" />
             </Show>
           </button>
         </div>
@@ -116,7 +116,7 @@ export default function Navbar() {
                   class="text-lg text-text-secondary hover:text-primary transition-colors flex items-center gap-2"
                 >
                   {link.label}
-                  <ExternalLink class="w-4 h-4" />
+                  <Icon icon="lucide:external-link" class="w-4 h-4" />
                 </a>
               )}
             </For>
@@ -124,14 +124,14 @@ export default function Navbar() {
             <div class="flex flex-col gap-3 mt-4">
               <A href="/book" onClick={() => setIsOpen(false)}>
                 <Button size="lg" variant="outline" class="w-full">
-                  <CalendarPlus class="w-4 h-4" />
+                  <Icon icon="lucide:calendar-plus" class="w-4 h-4" />
                   Book Space
                 </Button>
               </A>
               <a href="https://wts.sh" target="_blank" rel="noopener noreferrer" onClick={() => setIsOpen(false)}>
                 <Button size="lg" class="w-full">
                   GET TIX
-                  <ExternalLink class="w-4 h-4" />
+                  <Icon icon="lucide:external-link" class="w-4 h-4" />
                 </Button>
               </a>
             </div>

@@ -1,16 +1,7 @@
+import { Icon } from "@iconify-icon/solid";
 import { Meta, Title } from "@solidjs/meta";
 import { createAsync, useParams } from "@solidjs/router";
 import { A } from "@solidjs/router";
-import {
-  ArrowLeft,
-  Calendar,
-  Clock,
-  ExternalLink,
-  Facebook,
-  MapPin,
-  Share2,
-  Twitter,
-} from "lucide-solid";
 import { For, Show } from "solid-js";
 import NotFoundPage from "~/components/common/NotFoundPage";
 import Reveal from "~/components/common/Reveal";
@@ -25,7 +16,7 @@ import { createGoogleCalendarUrl, formatDate, formatTime, getShareUrls, isEventP
 
 export default function EventPage() {
   const params = useParams();
-  const data = createAsync(() => getEventPageData(params.slug));
+  const data = createAsync(() => getEventPageData(params.slug!));
 
   return (
     <>
@@ -60,7 +51,7 @@ export default function EventPage() {
               <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-20 relative z-10">
                 <Reveal>
                   <A href="/events" class="inline-flex items-center gap-2 text-text-muted hover:text-primary transition-colors mb-6">
-                    <ArrowLeft class="w-4 h-4" />
+                    <Icon icon="lucide:arrow-left" class="w-4 h-4" />
                     Back to Events
                   </A>
                 </Reveal>
@@ -111,7 +102,7 @@ export default function EventPage() {
                         <div class="space-y-4">
                           <div class="flex items-center gap-3 text-text-primary">
                             <div class="p-2 rounded-lg bg-primary/10 text-primary">
-                              <Calendar class="w-5 h-5" />
+                              <Icon icon="lucide:calendar" class="w-5 h-5" />
                             </div>
                             <div>
                               <div class="font-semibold">{formatDate(details.event.start, "EEEE, MMMM d, yyyy")}</div>
@@ -121,14 +112,14 @@ export default function EventPage() {
 
                           <div class="flex items-center gap-3 text-text-primary">
                             <div class="p-2 rounded-lg bg-primary/10 text-primary">
-                              <Clock class="w-5 h-5" />
+                              <Icon icon="lucide:clock" class="w-5 h-5" />
                             </div>
                             <div class="font-semibold">{formatTime(details.event.start)}</div>
                           </div>
 
                           <div class="flex items-center gap-3 text-text-primary">
                             <div class="p-2 rounded-lg bg-primary/10 text-primary">
-                              <MapPin class="w-5 h-5" />
+                              <Icon icon="lucide:map-pin" class="w-5 h-5" />
                             </div>
                             <div>
                               <div class="font-semibold">Base42</div>
@@ -141,7 +132,7 @@ export default function EventPage() {
                           <a href={details.event.registerLink!} target="_blank" rel="noopener noreferrer" class="block">
                             <Button size="lg" class="w-full">
                               Register Now
-                              <ExternalLink class="w-4 h-4" />
+                              <Icon icon="lucide:external-link" class="w-4 h-4" />
                             </Button>
                           </a>
                         </Show>
@@ -149,7 +140,7 @@ export default function EventPage() {
                         <Show when={!isPast}>
                           <a href={calendarUrl} target="_blank" rel="noopener noreferrer" class="block">
                             <Button variant="outline" size="lg" class="w-full">
-                              <Calendar class="w-4 h-4" />
+                              <Icon icon="lucide:calendar" class="w-4 h-4" />
                               Add to Calendar
                             </Button>
                           </a>
@@ -157,7 +148,7 @@ export default function EventPage() {
 
                         <div>
                           <div class="flex items-center gap-2 text-sm text-text-muted mb-3">
-                            <Share2 class="w-4 h-4" />
+                            <Icon icon="lucide:share-2" class="w-4 h-4" />
                             Share this event
                           </div>
                           <div class="flex gap-2">
@@ -168,7 +159,7 @@ export default function EventPage() {
                               class="p-2 rounded-lg bg-dark-700 text-text-secondary hover:text-primary hover:bg-dark-600 transition-colors"
                               aria-label="Share on Twitter"
                             >
-                              <Twitter class="w-5 h-5" />
+                              <Icon icon="lucide:twitter" class="w-5 h-5" />
                             </a>
                             <a
                               href={shareUrls.facebook}
@@ -177,7 +168,7 @@ export default function EventPage() {
                               class="p-2 rounded-lg bg-dark-700 text-text-secondary hover:text-primary hover:bg-dark-600 transition-colors"
                               aria-label="Share on Facebook"
                             >
-                              <Facebook class="w-5 h-5" />
+                              <Icon icon="lucide:facebook" class="w-5 h-5" />
                             </a>
                             <ShareButton url={`${siteMeta.siteUrl}/events/${details.event.slug}`} />
                           </div>

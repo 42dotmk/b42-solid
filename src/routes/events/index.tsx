@@ -1,7 +1,7 @@
+import { Icon } from "@iconify-icon/solid";
 import { Meta, Title } from "@solidjs/meta";
 import { createAsync } from "@solidjs/router";
 import { A } from "@solidjs/router";
-import { ArrowLeft } from "lucide-solid";
 import { Show } from "solid-js";
 import Reveal from "~/components/common/Reveal";
 import EventCard from "~/components/events/EventCard";
@@ -27,7 +27,7 @@ export default function EventsPage() {
           <div class="mb-12">
             <Reveal>
               <A href="/" class="inline-flex items-center gap-2 text-text-muted hover:text-primary transition-colors mb-8">
-                <ArrowLeft class="w-4 h-4" />
+                <Icon icon="lucide:arrow-left" class="w-4 h-4" />
                 Back to Home
               </A>
             </Reveal>

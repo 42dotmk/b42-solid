@@ -1,5 +1,5 @@
+import { Icon } from "@iconify-icon/solid";
 import { A } from "@solidjs/router";
-import { ArrowRight, Calendar, Clock } from "lucide-solid";
 import { For, Show } from "solid-js";
 import { getImageUrl } from "~/lib/api";
 import { formatDate, formatTime, getExcerpt, isEventPast } from "~/lib/utils";
@@ -30,11 +30,11 @@ export default function EventCard(props: EventCardProps) {
         <CardContent class="space-y-3">
           <div class="flex items-center gap-4 text-secondary font-mono text-sm">
             <span class="flex items-center gap-1.5">
-              <Calendar class="w-3.5 h-3.5" />
+              <Icon icon="lucide:calendar" class="w-3.5 h-3.5" />
               {formatDate(props.event.start, "MMM d")}
             </span>
             <span class="flex items-center gap-1.5">
-              <Clock class="w-3.5 h-3.5" />
+              <Icon icon="lucide:clock" class="w-3.5 h-3.5" />
               {formatTime(props.event.start)}
             </span>
           </div>
@@ -56,7 +56,7 @@ export default function EventCard(props: EventCardProps) {
           <div class="pt-2">
             <span class="inline-flex items-center gap-1 text-primary text-sm font-medium group-hover:gap-2 transition-all">
               {isPast() ? "View Details" : "Register"}
-              <ArrowRight class="w-4 h-4" />
+              <Icon icon="lucide:arrow-right" class="w-4 h-4" />
             </span>
           </div>
         </CardContent>

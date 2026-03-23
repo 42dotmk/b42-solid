@@ -3,6 +3,13 @@ import type { YouTubePlaylist, YouTubeVideo } from "~/types";
 const YOUTUBE_API_KEY = import.meta.env.VITE_YOUTUBE_API_KEY;
 const YOUTUBE_API_BASE = "https://www.googleapis.com/youtube/v3";
 const CHANNEL_ID = import.meta.env.VITE_YOUTUBE_CHANNEL_ID || "YOUR_CHANNEL_ID";
+const FETCH_TIMEOUT_MS = 5000;
+
+function fetchWithTimeout(url: string, timeoutMs = FETCH_TIMEOUT_MS): Promise<Response> {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), timeoutMs);
+  return fetch(url, { signal: controller.signal }).finally(() => clearTimeout(timer));
+}
 
 async function fetchAllPlaylistVideos(playlistId: string, playlistTitle?: string): Promise<YouTubeVideo[]> {
   if (!YOUTUBE_API_KEY || !playlistId) {
@@ -15,7 +22,7 @@ async function fetchAllPlaylistVideos(playlistId: string, playlistTitle?: string
   try {
     do {
       const pageParam = nextPageToken ? `&pageToken=${nextPageToken}` : "";
-      const response = await fetch(
+      const response = await fetchWithTimeout(
         `${YOUTUBE_API_BASE}/playlistItems?part=snippet,contentDetails&playlistId=${playlistId}&maxResults=50${pageParam}&key=${YOUTUBE_API_KEY}`
       );
 
@@ -65,7 +72,7 @@ async function enrichVideosWithDetails(videos: YouTubeVideo[]) {
     for (let index = 0; index < videos.length; index += 50) {
       const batch = videos.slice(index, index + 50);
       const videoIds = batch.map(video => video.id).join(",");
-      const response = await fetch(
+      const response = await fetchWithTimeout(
         `${YOUTUBE_API_BASE}/videos?part=contentDetails,statistics&id=${videoIds}&key=${YOUTUBE_API_KEY}`
       );
 
@@ -108,7 +115,7 @@ export async function getChannelPlaylists(): Promise<YouTubePlaylist[]> {
   try {
     do {
       const pageParam = nextPageToken ? `&pageToken=${nextPageToken}` : "";
-      const response = await fetch(
+      const response = await fetchWithTimeout(
         `${YOUTUBE_API_BASE}/playlists?part=snippet,contentDetails&channelId=${CHANNEL_ID}&maxResults=50${pageParam}&key=${YOUTUBE_API_KEY}`
       );
 
@@ -183,7 +190,7 @@ export async function getChannelVideos() {
   }
 
   try {
-    const channelResponse = await fetch(
+    const channelResponse = await fetchWithTimeout(
       `${YOUTUBE_API_BASE}/channels?part=contentDetails&id=${CHANNEL_ID}&key=${YOUTUBE_API_KEY}`
     );
 

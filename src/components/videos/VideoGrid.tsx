@@ -1,4 +1,4 @@
-import { X } from "lucide-solid";
+import { Icon } from "@iconify-icon/solid";
 import { For, Show, createMemo, createSignal } from "solid-js";
 import { getYouTubeEmbedUrl } from "~/lib/youtube";
 import type { YouTubePlaylist, YouTubeVideo } from "~/types";
@@ -51,7 +51,7 @@ export default function VideoGrid(props: VideoGridProps) {
                   onClick={() => setSearchQuery("")}
                   class="absolute right-3 top-1/2 -translate-y-1/2 text-text-muted hover:text-text-primary"
                 >
-                  <X class="w-4 h-4" />
+                  <Icon icon="lucide:x" class="w-4 h-4" />
                 </button>
               </Show>
             </div>
@@ -118,7 +118,7 @@ export default function VideoGrid(props: VideoGridProps) {
                 class="absolute -top-12 right-0 p-2 text-text-muted hover:text-primary transition-colors"
                 aria-label="Close video"
               >
-                <X class="w-8 h-8" />
+                <Icon icon="lucide:x" class="w-8 h-8" />
               </button>
 
               <div class="relative aspect-video rounded-xl overflow-hidden bg-dark-800">
@@ -126,7 +126,7 @@ export default function VideoGrid(props: VideoGridProps) {
                   src={`${getYouTubeEmbedUrl(video().id)}?autoplay=1`}
                   title={video().title}
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
+                  allowfullscreen
                   class="absolute inset-0 w-full h-full"
                 />
               </div>

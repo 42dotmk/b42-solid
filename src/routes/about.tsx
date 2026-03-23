@@ -1,6 +1,6 @@
+import { Icon } from "@iconify-icon/solid";
 import { Meta, Title } from "@solidjs/meta";
 import { A } from "@solidjs/router";
-import { ArrowLeft, Mail, MapPin } from "lucide-solid";
 import { For } from "solid-js";
 import CountUp from "~/components/common/CountUp";
 import Reveal from "~/components/common/Reveal";
@@ -21,7 +21,7 @@ export default function About() {
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <Reveal>
             <A href="/" class="inline-flex items-center gap-2 text-text-muted hover:text-primary transition-colors mb-8">
-              <ArrowLeft class="w-4 h-4" />
+              <Icon icon="lucide:arrow-left" class="w-4 h-4" />
               Back to Home
             </A>
           </Reveal>
@@ -220,7 +220,7 @@ export default function About() {
                   <Reveal delay={index() * 100}>
                     <div class="p-6 rounded-xl bg-dark-700 border border-border hover:border-primary/50 transition-colors h-full">
                       <div class="p-3 rounded-lg bg-primary/10 text-primary w-fit mb-4">
-                        <value.icon class="w-6 h-6" />
+                        <Icon icon={value.icon} class="w-6 h-6" />
                       </div>
                       <h3 class="font-display font-semibold text-text-primary mb-2">{value.title}</h3>
                       <p class="text-sm text-text-muted">{value.description}</p>
@@ -291,7 +291,7 @@ export default function About() {
                     width="100%"
                     height="100%"
                     style={{ border: "0", filter: "invert(90%) hue-rotate(180deg)" }}
-                    allowFullScreen
+                    allowfullscreen
                     loading="lazy"
                     referrerPolicy="no-referrer-when-downgrade"
                     title="Base42 Location"
@@ -305,7 +305,7 @@ export default function About() {
                   <div class="space-y-4 mb-8">
                     <div class="flex items-start gap-4">
                       <div class="p-2 rounded-lg bg-primary/10 text-primary">
-                        <MapPin class="w-5 h-5" />
+                        <Icon icon="lucide:map-pin" class="w-5 h-5" />
                       </div>
                       <div>
                         <div class="font-semibold text-text-primary">Location</div>
@@ -314,7 +314,7 @@ export default function About() {
                     </div>
                     <div class="flex items-start gap-4">
                       <div class="p-2 rounded-lg bg-primary/10 text-primary">
-                        <Mail class="w-5 h-5" />
+                        <Icon icon="lucide:mail" class="w-5 h-5" />
                       </div>
                       <div>
                         <div class="font-semibold text-text-primary">Email</div>

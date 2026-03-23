@@ -1,35 +1,32 @@
-import type { Component } from "solid-js";
-import {
-  BarChart3,
-  Bot,
-  Calendar,
-  Code,
-  Database,
-  Facebook,
-  Gamepad2,
-  Github,
-  Globe,
-  Handshake,
-  Heart,
-  Instagram,
-  Layers,
-  Linkedin,
-  Mail,
-  MapPin,
-  Maximize,
-  MessageSquare,
-  Network,
-  Printer,
-  Projector,
-  Server,
-  Sofa,
-  Terminal,
-  Users,
-  Wrench,
-  Youtube,
-} from "lucide-solid";
+const BarChart3 = "lucide:bar-chart-3";
+const Bot = "lucide:bot";
+const Calendar = "lucide:calendar";
+const Code = "lucide:code";
+const Database = "lucide:database";
+const Facebook = "lucide:facebook";
+const Gamepad2 = "lucide:gamepad-2";
+const Github = "lucide:github";
+const Globe = "lucide:globe";
+const Handshake = "lucide:handshake";
+const Heart = "lucide:heart";
+const Instagram = "lucide:instagram";
+const Layers = "lucide:layers";
+const Linkedin = "lucide:linkedin";
+const Mail = "lucide:mail";
+const MapPin = "lucide:map-pin";
+const Maximize = "lucide:maximize";
+const MessageSquare = "lucide:message-square";
+const Network = "lucide:network";
+const Printer = "lucide:printer";
+const Projector = "lucide:projector";
+const Server = "lucide:server";
+const Sofa = "lucide:sofa";
+const Terminal = "lucide:terminal";
+const Users = "lucide:users";
+const Wrench = "lucide:wrench";
+const Youtube = "lucide:youtube";
 
-type IconComponent = Component<{ class?: string }>;
+type IconComponent = string;
 
 export const siteMeta = {
   defaultTitle: "Base42 | Hackerspace in Skopje for Builders & Curious Minds",

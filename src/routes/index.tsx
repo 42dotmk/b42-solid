@@ -1,22 +1,8 @@
+import { Icon } from "@iconify-icon/solid";
 import { Meta, Title } from "@solidjs/meta";
 import { createAsync } from "@solidjs/router";
 import { A } from "@solidjs/router";
-import {
-  AlertCircle,
-  ArrowDown,
-  ArrowRight,
-  CalendarPlus,
-  CheckCircle,
-  ExternalLink,
-  Mail,
-  MapPin,
-  Projector,
-  Send,
-  Users,
-  Wrench,
-  Youtube,
-} from "lucide-solid";
-import { For, Show, createSignal } from "solid-js";
+import { For, Show, createSignal, onMount } from "solid-js";
 import { createStore } from "solid-js/store";
 import CountUp from "~/components/common/CountUp";
 import Reveal from "~/components/common/Reveal";
@@ -32,10 +18,161 @@ import {
   siteMeta,
   stats,
 } from "~/data/site";
-import { getHomePageData } from "~/lib/queries";
+import type { Event } from "~/types";
+import type { YouTubeVideo } from "~/types";
+import { getUpcomingEvents } from "~/lib/api";
+import { getChannelVideos } from "~/lib/youtube";
+
+function EventCardSkeleton() {
+  return (
+    <div class="rounded-xl bg-dark-700 border border-border overflow-hidden animate-pulse">
+      <div class="aspect-video skeleton" />
+      <div class="p-5 space-y-3">
+        <div class="h-4 w-20 skeleton rounded" />
+        <div class="h-6 w-3/4 skeleton rounded" />
+        <div class="h-4 w-1/2 skeleton rounded" />
+      </div>
+    </div>
+  );
+}
+
+function VideoCardSkeleton() {
+  return (
+    <div class="rounded-xl bg-dark-700 border border-border overflow-hidden animate-pulse">
+      <div class="aspect-video skeleton" />
+      <div class="p-4 space-y-2">
+        <div class="h-5 w-3/4 skeleton rounded" />
+        <div class="h-4 w-1/2 skeleton rounded" />
+      </div>
+    </div>
+  );
+}
+
+function EventsSkeletonGrid() {
+  return (
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <EventCardSkeleton />
+      <EventCardSkeleton />
+      <EventCardSkeleton />
+    </div>
+  );
+}
+
+function VideosSkeletonGrid() {
+  return (
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <VideoCardSkeleton />
+      <VideoCardSkeleton />
+      <VideoCardSkeleton />
+    </div>
+  );
+}
+
+function UpcomingEventsSection() {
+  const [events, setEvents] = createSignal<Event[] | null>(null);
+
+  onMount(async () => {
+    const result = await getUpcomingEvents(3);
+    setEvents(result.data);
+  });
+
+  return (
+    <Show when={events() !== null} fallback={<EventsSkeletonGrid />}>
+      <Show
+        when={events()!.length > 0}
+        fallback={
+          <Reveal>
+            <div class="text-center py-16 px-4 rounded-2xl bg-dark-800 border border-border">
+              <p class="text-text-secondary text-lg mb-4">No upcoming events scheduled at the moment.</p>
+              <p class="text-text-muted mb-6">Check back soon or join our Discord for announcements!</p>
+              <a href="https://discord.gg/424xxTZVYX" target="_blank" rel="noopener noreferrer">
+                <Button>Join Discord</Button>
+              </a>
+            </div>
+          </Reveal>
+        }
+      >
+        <>
+          <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <For each={events()!}>
+              {(event, index) => (
+                <Reveal delay={index() * 100}>
+                  <EventCard event={event} />
+                </Reveal>
+              )}
+            </For>
+          </div>
+          <Reveal delay={400}>
+            <div class="mt-12 text-center">
+              <A href="/events">
+                <Button variant="outline" size="lg">
+                  View All Events
+                  <Icon icon="lucide:arrow-right" class="w-4 h-4" />
+                </Button>
+              </A>
+            </div>
+          </Reveal>
+        </>
+      </Show>
+    </Show>
+  );
+}
+
+function LatestVideosSection() {
+  const [videos, setVideos] = createSignal<YouTubeVideo[] | null>(null);
+
+  onMount(async () => {
+    const allVideos = await getChannelVideos();
+    setVideos(allVideos.slice(0, 3));
+  });
+
+  return (
+    <Show when={videos() !== null} fallback={<VideosSkeletonGrid />}>
+      <Show
+        when={videos()!.length > 0}
+        fallback={
+          <Reveal>
+            <div class="text-center py-16 px-4 rounded-2xl bg-dark-900 border border-border">
+              <Icon icon="lucide:youtube" class="w-12 h-12 text-text-muted mx-auto mb-4" />
+              <p class="text-text-secondary text-lg mb-4">No videos available yet.</p>
+              <p class="text-text-muted mb-6">Subscribe to our YouTube channel for updates!</p>
+              <a href={siteMeta.youtubeChannelUrl} target="_blank" rel="noopener noreferrer">
+                <Button>
+                  <Icon icon="lucide:youtube" class="w-4 h-4" />
+                  Subscribe on YouTube
+                </Button>
+              </a>
+            </div>
+          </Reveal>
+        }
+      >
+        <>
+          <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <For each={videos()!}>
+              {(video, index) => (
+                <Reveal delay={index() * 100}>
+                  <VideoCard video={video} />
+                </Reveal>
+              )}
+            </For>
+          </div>
+          <Reveal delay={400}>
+            <div class="mt-12 text-center">
+              <A href="/videos">
+                <Button variant="outline" size="lg">
+                  View All Videos
+                  <Icon icon="lucide:arrow-right" class="w-4 h-4" />
+                </Button>
+              </A>
+            </div>
+          </Reveal>
+        </>
+      </Show>
+    </Show>
+  );
+}
 
 export default function Home() {
-  const data = createAsync(() => getHomePageData());
   const [formState, setFormState] = createSignal<"idle" | "loading" | "success" | "error">("idle");
   const [formData, setFormData] = createStore({
     name: "",
@@ -101,7 +238,7 @@ export default function Home() {
               <A href="/events">
                 <Button size="lg" variant="outline">
                   Upcoming Events
-                  <ExternalLink class="w-4 h-4" />
+                  <Icon icon="lucide:external-link" class="w-4 h-4" />
                 </Button>
               </A>
             </div>
@@ -118,7 +255,7 @@ export default function Home() {
         </div>
 
         <div class="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
-          <ArrowDown class="w-6 h-6 text-text-muted" />
+          <Icon icon="lucide:arrow-down" class="w-6 h-6 text-text-muted" />
         </div>
 
         <div class="absolute top-1/4 left-10 w-2 h-2 rounded-full bg-primary/50 animate-float" style={{ "animation-delay": "0s" }} />
@@ -160,7 +297,7 @@ export default function Home() {
                 <A href="/about">
                   <Button variant="ghost" class="group mt-4">
                     Learn more about us
-                    <ArrowRight class="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                    <Icon icon="lucide:arrow-right" class="w-4 h-4 transition-transform group-hover:translate-x-1" />
                   </Button>
                 </A>
               </div>
@@ -184,7 +321,7 @@ export default function Home() {
                     <div class="absolute bottom-0 left-0 right-0 p-5">
                       <div class="flex items-center gap-3 mb-2">
                         <div class="p-2 rounded-lg bg-primary/10 text-primary">
-                          <facility.icon class="w-5 h-5" />
+                          <Icon icon={facility.icon} class="w-5 h-5" />
                         </div>
                         <h3 class="font-display font-semibold text-text-primary">{facility.title}</h3>
                       </div>
@@ -206,7 +343,7 @@ export default function Home() {
                 {(stat, index) => (
                   <div class="text-center" style={{ "transition-delay": `${index() * 100}ms` }}>
                     <div class="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-primary/10 text-primary mb-4">
-                      <stat.icon class="w-6 h-6" />
+                      <Icon icon={stat.icon} class="w-6 h-6" />
                     </div>
                     <div class="text-3xl md:text-4xl font-display font-bold text-primary mb-1">
                       <CountUp end={stat.value} suffix={stat.suffix} />
@@ -226,7 +363,7 @@ export default function Home() {
           <Reveal>
             <div class="rounded-2xl border border-primary/30 bg-dark-800/50 p-8 md:p-12 text-center">
               <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-primary/10 text-primary mb-6">
-                <CalendarPlus class="w-8 h-8" />
+                <Icon icon="lucide:calendar-plus" class="w-8 h-8" />
               </div>
               <h2 class="text-3xl md:text-4xl font-display font-bold text-text-primary mb-4">Host Your Event at Base42</h2>
               <p class="text-text-secondary text-lg max-w-2xl mx-auto mb-8">
@@ -234,21 +371,21 @@ export default function Home() {
               </p>
               <div class="flex flex-wrap justify-center gap-6 mb-8">
                 <div class="flex items-center gap-2 text-text-muted">
-                  <Users class="w-5 h-5 text-primary" />
+                  <Icon icon="lucide:users" class="w-5 h-5 text-primary" />
                   <span>Up to 80 people</span>
                 </div>
                 <div class="flex items-center gap-2 text-text-muted">
-                  <Projector class="w-5 h-5 text-primary" />
+                  <Icon icon="lucide:projector" class="w-5 h-5 text-primary" />
                   <span>A/V Equipment</span>
                 </div>
                 <div class="flex items-center gap-2 text-text-muted">
-                  <Wrench class="w-5 h-5 text-primary" />
+                  <Icon icon="lucide:wrench" class="w-5 h-5 text-primary" />
                   <span>Workshop Tools</span>
                 </div>
               </div>
               <A href="/book">
                 <Button size="lg">
-                  <CalendarPlus class="w-5 h-5" />
+                  <Icon icon="lucide:calendar-plus" class="w-5 h-5" />
                   Book the Space
                 </Button>
               </A>
@@ -260,96 +397,14 @@ export default function Home() {
       <section class="py-24 bg-dark-900">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeader title="Upcoming Events" subtitle="Where builders, hackers, and curious minds gather" />
-          <Show when={data()}>
-            {pageData => (
-              <Show
-                when={pageData().upcomingEvents.length > 0}
-                fallback={
-                  <Reveal>
-                    <div class="text-center py-16 px-4 rounded-2xl bg-dark-800 border border-border">
-                      <p class="text-text-secondary text-lg mb-4">No upcoming events scheduled at the moment.</p>
-                      <p class="text-text-muted mb-6">Check back soon or join our Discord for announcements!</p>
-                      <a href="https://discord.gg/424xxTZVYX" target="_blank" rel="noopener noreferrer">
-                        <Button>Join Discord</Button>
-                      </a>
-                    </div>
-                  </Reveal>
-                }
-              >
-                <>
-                  <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <For each={pageData().upcomingEvents}>
-                      {(event, index) => (
-                        <Reveal delay={index() * 100}>
-                          <EventCard event={event} />
-                        </Reveal>
-                      )}
-                    </For>
-                  </div>
-                  <Reveal delay={400}>
-                    <div class="mt-12 text-center">
-                      <A href="/events">
-                        <Button variant="outline" size="lg">
-                          View All Events
-                          <ArrowRight class="w-4 h-4" />
-                        </Button>
-                      </A>
-                    </div>
-                  </Reveal>
-                </>
-              </Show>
-            )}
-          </Show>
+          <UpcomingEventsSection />
         </div>
       </section>
 
       <section class="py-24 bg-dark-800">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeader title="Latest Videos" subtitle="Catch up on recordings from our community events" />
-          <Show when={data()}>
-            {pageData => (
-              <Show
-                when={pageData().latestVideos.length > 0}
-                fallback={
-                  <Reveal>
-                    <div class="text-center py-16 px-4 rounded-2xl bg-dark-900 border border-border">
-                      <Youtube class="w-12 h-12 text-text-muted mx-auto mb-4" />
-                      <p class="text-text-secondary text-lg mb-4">No videos available yet.</p>
-                      <p class="text-text-muted mb-6">Subscribe to our YouTube channel for updates!</p>
-                      <a href={siteMeta.youtubeChannelUrl} target="_blank" rel="noopener noreferrer">
-                        <Button>
-                          <Youtube class="w-4 h-4" />
-                          Subscribe on YouTube
-                        </Button>
-                      </a>
-                    </div>
-                  </Reveal>
-                }
-              >
-                <>
-                  <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <For each={pageData().latestVideos}>
-                      {(video, index) => (
-                        <Reveal delay={index() * 100}>
-                          <VideoCard video={video} />
-                        </Reveal>
-                      )}
-                    </For>
-                  </div>
-                  <Reveal delay={400}>
-                    <div class="mt-12 text-center">
-                      <A href="/videos">
-                        <Button variant="outline" size="lg">
-                          View All Videos
-                          <ArrowRight class="w-4 h-4" />
-                        </Button>
-                      </A>
-                    </div>
-                  </Reveal>
-                </>
-              </Show>
-            )}
-          </Show>
+          <LatestVideosSection />
         </div>
       </section>
 
@@ -363,7 +418,7 @@ export default function Home() {
                   <div class="p-6 rounded-xl bg-dark-700 border border-border hover:border-primary/50 transition-all duration-300 group">
                     <div class="flex items-start gap-4">
                       <div class="p-3 rounded-lg bg-primary/10 text-primary shrink-0">
-                        <project.icon class="w-6 h-6" />
+                        <Icon icon={project.icon} class="w-6 h-6" />
                       </div>
                       <div class="flex-1 min-w-0">
                         <h3 class="font-display font-semibold text-lg text-text-primary mb-2 group-hover:text-primary transition-colors">
@@ -485,19 +540,19 @@ export default function Home() {
                       </>
                     ) : formState() === "success" ? (
                       <>
-                        <CheckCircle class="w-5 h-5" />
+                        <Icon icon="lucide:check-circle" class="w-5 h-5" />
                         Message Sent!
                       </>
                     ) : (
                       <>
-                        <Send class="w-5 h-5" />
+                        <Icon icon="lucide:send" class="w-5 h-5" />
                         Send Message
                       </>
                     )}
                   </Button>
                   <Show when={formState() === "error"}>
                     <div class="flex items-center gap-2 text-error text-sm">
-                      <AlertCircle class="w-4 h-4" />
+                      <Icon icon="lucide:alert-circle" class="w-4 h-4" />
                       Something went wrong. Please try again.
                     </div>
                   </Show>
@@ -523,7 +578,7 @@ export default function Home() {
                 <div class="p-6 rounded-xl bg-dark-700 border border-border space-y-4">
                   <div class="flex items-start gap-4">
                     <div class="p-2 rounded-lg bg-primary/10 text-primary">
-                      <MapPin class="w-5 h-5" />
+                      <Icon icon="lucide:map-pin" class="w-5 h-5" />
                     </div>
                     <div>
                       <h4 class="font-semibold text-text-primary">Location</h4>
@@ -533,7 +588,7 @@ export default function Home() {
 
                   <div class="flex items-start gap-4">
                     <div class="p-2 rounded-lg bg-primary/10 text-primary">
-                      <Mail class="w-5 h-5" />
+                      <Icon icon="lucide:mail" class="w-5 h-5" />
                     </div>
                     <div>
                       <h4 class="font-semibold text-text-primary">Email</h4>

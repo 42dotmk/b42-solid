@@ -1,5 +1,5 @@
+import { Icon } from "@iconify-icon/solid";
 import { A } from "@solidjs/router";
-import { ArrowLeft, Calendar } from "lucide-solid";
 import Button from "~/components/ui/Button";
 
 export default function NotFoundPage() {
@@ -23,13 +23,13 @@ export default function NotFoundPage() {
         <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
           <A href="/">
             <Button size="lg">
-              <ArrowLeft class="w-4 h-4" />
+              <Icon icon="lucide:arrow-left" class="w-4 h-4" />
               Go Home
             </Button>
           </A>
           <A href="/events">
             <Button variant="outline" size="lg">
-              <Calendar class="w-4 h-4" />
+              <Icon icon="lucide:calendar" class="w-4 h-4" />
               View Events
             </Button>
           </A>

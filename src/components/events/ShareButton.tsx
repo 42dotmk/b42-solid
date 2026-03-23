@@ -1,4 +1,4 @@
-import { Link } from "lucide-solid";
+import Link from "lucide-solid/icons/link";
 
 interface ShareButtonProps {
   url: string;
