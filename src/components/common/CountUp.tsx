@@ -1,4 +1,4 @@
-import { createSignal, onCleanup, onMount } from "solid-js";
+import { createEffect, createSignal, on, onCleanup, onMount } from "solid-js";
 import { cn } from "~/lib/utils";
 
 interface CountUpProps {
@@ -32,15 +32,12 @@ export default function CountUp(props: CountUpProps) {
     onCleanup(() => observer.disconnect());
   });
 
-  onMount(() => {
-    let frame = 0;
+  // Only start animating when started() flips to true — no polling loop
+  createEffect(
+    on(started, isStarted => {
+      if (!isStarted) return;
 
-    const start = () => {
-      if (!started()) {
-        frame = requestAnimationFrame(start);
-        return;
-      }
-
+      let frame: number;
       const startedAt = performance.now();
 
       const tick = (now: number) => {
@@ -54,11 +51,9 @@ export default function CountUp(props: CountUpProps) {
       };
 
       frame = requestAnimationFrame(tick);
-    };
-
-    frame = requestAnimationFrame(start);
-    onCleanup(() => cancelAnimationFrame(frame));
-  });
+      onCleanup(() => cancelAnimationFrame(frame));
+    })
+  );
 
   return (
     <span ref={ref} class={cn("tabular-nums", props.class)}>

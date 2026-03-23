@@ -1,7 +1,6 @@
 import type { Event, StrapiResponse } from "~/types";
 
-const STRAPI_URL =
-  process.env.NEXT_PUBLIC_STRAPI_URL || process.env.VITE_STRAPI_URL || "https://cms.42.mk";
+const STRAPI_URL = import.meta.env.VITE_STRAPI_URL || "https://cms.42.mk";
 const API_URL = `${STRAPI_URL}/api`;
 
 const emptyPagination = (page: number, pageSize: number) => ({

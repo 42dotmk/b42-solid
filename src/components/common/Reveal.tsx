@@ -17,9 +17,13 @@ export default function Reveal(props: RevealProps) {
   onMount(() => {
     if (!ref) return;
 
+    // Immediately check if already in viewport — skip observer round-trip
     const rect = ref.getBoundingClientRect();
     if (rect.top < window.innerHeight && rect.bottom > 0) {
-      setVisible(true);
+      // Use requestAnimationFrame to batch with the next paint
+      // rather than waiting for IntersectionObserver's async callback
+      requestAnimationFrame(() => setVisible(true));
+      return;
     }
 
     const observer = new IntersectionObserver(

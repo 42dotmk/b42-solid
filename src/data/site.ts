@@ -37,7 +37,7 @@ export const siteMeta = {
   description:
     "Base42 is a hackerspace in Skopje, Macedonia. A community space for builders, makers, developers, and curious minds to learn, create, and share knowledge.",
   siteUrl: "https://42.mk",
-  youtubeChannelUrl: process.env.NEXT_PUBLIC_YOUTUBE_CHANNEL_URL || "https://www.youtube.com/@base42mk",
+  youtubeChannelUrl: import.meta.env.VITE_YOUTUBE_CHANNEL_URL || "https://www.youtube.com/@base42mk",
 };
 
 export const navLinks = [

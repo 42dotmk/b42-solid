@@ -1,8 +1,8 @@
 import type { YouTubePlaylist, YouTubeVideo } from "~/types";
 
-const YOUTUBE_API_KEY = process.env.YOUTUBE_API_KEY || process.env.NEXT_PUBLIC_YOUTUBE_API_KEY;
+const YOUTUBE_API_KEY = import.meta.env.VITE_YOUTUBE_API_KEY;
 const YOUTUBE_API_BASE = "https://www.googleapis.com/youtube/v3";
-const CHANNEL_ID = process.env.NEXT_PUBLIC_YOUTUBE_CHANNEL_ID || "YOUR_CHANNEL_ID";
+const CHANNEL_ID = import.meta.env.VITE_YOUTUBE_CHANNEL_ID || "YOUR_CHANNEL_ID";
 
 async function fetchAllPlaylistVideos(playlistId: string, playlistTitle?: string): Promise<YouTubeVideo[]> {
   if (!YOUTUBE_API_KEY || !playlistId) {
