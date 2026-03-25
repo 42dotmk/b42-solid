@@ -1,5 +1,6 @@
 import { Icon } from "@iconify-icon/solid";
-import { Component, onMount, onCleanup, createEffect, Show, Portal } from "solid-js";
+import { Component, onMount, onCleanup, createEffect, Show } from "solid-js";
+import { Portal } from "solid-js/web";
 import type { YouTubeVideo } from "~/types";
 import LiteYouTubeEmbed from "./LiteYouTubeEmbed";
 
@@ -166,7 +167,7 @@ const VideoModal: Component<VideoModalProps> = props => {
                 {props.video.title}
               </h3>
               <Show when={props.video.viewCount}>
-                <p class="text-text-muted text-sm mt-1">{props.video.video.viewCount}</p>
+                <p class="text-text-muted text-sm mt-1">{props.video.viewCount}</p>
               </Show>
             </div>
           </div>

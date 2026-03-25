@@ -51,9 +51,11 @@ export function clientOnly<T extends Record<string, any>>(
       }
     });
 
+    const DynamicComponent = Component();
+
     return (
       <Show when={!isServer && !isLoading()} fallback={isServer ? null : fallback}>
-        {Component() && <Component() {...props} />}
+        {DynamicComponent && <DynamicComponent {...props} />}
       </Show>
     );
   };

@@ -1,9 +1,9 @@
 import { Icon } from "@iconify-icon/solid";
 import { For, Show, createMemo, createSignal } from "solid-js";
-import { getYouTubeEmbedUrl } from "~/lib/youtube";
 import type { YouTubePlaylist, YouTubeVideo } from "~/types";
 import Reveal from "~/components/common/Reveal";
 import VideoCard from "./VideoCard";
+import VideoModal from "./VideoModal";
 
 interface VideoGridProps {
   videos: YouTubeVideo[];
@@ -98,7 +98,7 @@ export default function VideoGrid(props: VideoGridProps) {
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           <For each={filteredVideos()}>
             {(video, index) => (
-              <Reveal delay={index() * 75}>
+              <Reveal delay={index() * 75} class="h-full">
                 <VideoCard video={video} onPlay={setSelectedVideo} />
               </Reveal>
             )}
@@ -106,41 +106,11 @@ export default function VideoGrid(props: VideoGridProps) {
         </div>
       </Show>
 
-      <Show when={selectedVideo()}>
-        {video => (
-          <div
-            class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-dark-900/95 backdrop-blur-sm"
-            onClick={() => setSelectedVideo(null)}
-          >
-            <div class="relative w-full max-w-5xl" onClick={event => event.stopPropagation()}>
-              <button
-                onClick={() => setSelectedVideo(null)}
-                class="absolute -top-12 right-0 p-2 text-text-muted hover:text-primary transition-colors"
-                aria-label="Close video"
-              >
-                <Icon icon="lucide:x" class="w-8 h-8" />
-              </button>
-
-              <div class="relative aspect-video rounded-xl overflow-hidden bg-dark-800">
-                <iframe
-                  src={`${getYouTubeEmbedUrl(video().id)}?autoplay=1`}
-                  title={video().title}
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowfullscreen
-                  class="absolute inset-0 w-full h-full"
-                />
-              </div>
-
-              <div class="mt-4">
-                <h3 class="font-display font-semibold text-xl text-text-primary">{video().title}</h3>
-                <Show when={video().viewCount}>
-                  <p class="text-text-muted text-sm mt-1">{video().viewCount}</p>
-                </Show>
-              </div>
-            </div>
-          </div>
-        )}
-      </Show>
+      <VideoModal
+        video={selectedVideo()!}
+        isOpen={!!selectedVideo()}
+        onClose={() => setSelectedVideo(null)}
+      />
     </>
   );
 }
