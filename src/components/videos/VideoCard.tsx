@@ -12,7 +12,7 @@ interface VideoCardProps {
 }
 
 export default function VideoCard(props: VideoCardProps) {
-  const thumbnailUrl = () => props.video.thumbnail || getYouTubeThumbnail(props.video.id);
+  const thumbnailUrl = () => props.video.thumbnail || getYouTubeThumbnail(String(props.video.id));
 
   const handleClick = () => {
     if (props.onPlay) {
@@ -20,7 +20,12 @@ export default function VideoCard(props: VideoCardProps) {
       return;
     }
 
-    window.open(getYouTubeWatchUrl(props.video.id), "_blank", "noopener,noreferrer");
+    const videoId = String(props.video.id);
+    if (!videoId || videoId === "[object Promise]") {
+      console.error("Invalid video ID:", props.video);
+      return;
+    }
+    window.open(getYouTubeWatchUrl(videoId), "_blank", "noopener,noreferrer");
   };
 
   return (
