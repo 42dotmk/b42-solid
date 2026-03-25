@@ -136,7 +136,7 @@ const LiteYouTubeInner: Component<LiteYouTubeEmbedProps> = props => {
       }
       el.setAttribute("poster", posterQuality());
       el.className = "rounded-lg overflow-hidden";
-      el.style.cssText = "width: 100%; height: 100%; display: block;";
+      el.style.cssText = "width: 100%; height: 100%; display: block; margin: auto;";
       
       // Clear container and append element
       containerRef.innerHTML = "";
@@ -147,7 +147,8 @@ const LiteYouTubeInner: Component<LiteYouTubeEmbedProps> = props => {
   return (
     <div 
       ref={(el) => { containerRef = el; }}
-      class={`relative aspect-video ${props.class ?? ""}`}
+      class={`relative w-full h-full ${props.class ?? ""}`}
+      style="display: flex; align-items: center; justify-content: center;"
     >
       {!isLibraryLoaded() && <LoadingFallback title={props.title} />}
     </div>
