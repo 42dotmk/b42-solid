@@ -2,7 +2,7 @@ import { Icon } from "@iconify-icon/solid";
 import { Meta, Title } from "@solidjs/meta";
 import { createAsync } from "@solidjs/router";
 import { A } from "@solidjs/router";
-import { Show } from "solid-js";
+import { Show, Suspense } from "solid-js";
 import Reveal from "~/components/common/Reveal";
 import VideoGrid from "~/components/videos/VideoGrid";
 import { VideoSkeletonGrid } from "~/components/videos/VideoSkeleton";
@@ -46,35 +46,53 @@ export default function VideosPage() {
             </Reveal>
           </div>
 
-          <Show
-            when={data()}
-            fallback={<VideoSkeletonGrid count={6} />}
-          >
-            {pageData => (
-              <Show
-                when={pageData().videos.length > 0}
-                fallback={
-                  <Reveal>
-                    <div class="text-center py-16 px-4 rounded-2xl bg-dark-800 border border-border">
-                      <Icon icon="lucide:youtube" class="text-7xl text-text-muted mx-auto mb-6" />
-                      <p class="text-text-secondary text-lg mb-4">No videos available yet</p>
-                      <p class="text-text-muted mb-6">
-                        Subscribe to our YouTube channel to get notified when we upload new content!
-                      </p>
-                      <a href={siteMeta.youtubeChannelUrl} target="_blank" rel="noopener noreferrer">
-                        <Button>
-                          <Icon icon="lucide:youtube" class="text-lg" />
-                          Visit YouTube Channel
-                        </Button>
-                      </a>
-                    </div>
-                  </Reveal>
-                }
-              >
-                <VideoGrid videos={pageData().videos} playlists={pageData().playlists} />
-              </Show>
-            )}
-          </Show>
+          <Suspense fallback={<VideoSkeletonGrid count={6} />}>
+            <Show
+              when={data()}
+              fallback={
+                <Reveal>
+                  <div class="text-center py-16 px-4 rounded-2xl bg-dark-800 border border-border">
+                    <Icon icon="lucide:youtube" class="text-7xl text-text-muted mx-auto mb-6" />
+                    <p class="text-text-secondary text-lg mb-4">No videos available yet</p>
+                    <p class="text-text-muted mb-6">
+                      Subscribe to our YouTube channel to get notified when we upload new content!
+                    </p>
+                    <a href={siteMeta.youtubeChannelUrl} target="_blank" rel="noopener noreferrer">
+                      <Button>
+                        <Icon icon="lucide:youtube" class="text-lg" />
+                        Visit YouTube Channel
+                      </Button>
+                    </a>
+                  </div>
+                </Reveal>
+              }
+            >
+              {pageData => (
+                <Show
+                  when={pageData().videos.length > 0}
+                  fallback={
+                    <Reveal>
+                      <div class="text-center py-16 px-4 rounded-2xl bg-dark-800 border border-border">
+                        <Icon icon="lucide:youtube" class="text-7xl text-text-muted mx-auto mb-6" />
+                        <p class="text-text-secondary text-lg mb-4">No videos available yet</p>
+                        <p class="text-text-muted mb-6">
+                          Subscribe to our YouTube channel to get notified when we upload new content!
+                        </p>
+                        <a href={siteMeta.youtubeChannelUrl} target="_blank" rel="noopener noreferrer">
+                          <Button>
+                            <Icon icon="lucide:youtube" class="text-lg" />
+                            Visit YouTube Channel
+                          </Button>
+                        </a>
+                      </div>
+                    </Reveal>
+                  }
+                >
+                  <VideoGrid videos={pageData().videos} playlists={pageData().playlists} />
+                </Show>
+              )}
+            </Show>
+          </Suspense>
         </div>
       </div>
     </>
