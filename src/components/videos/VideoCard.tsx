@@ -36,7 +36,7 @@ export default function VideoCard(props: VideoCardProps) {
 
           <div class="absolute inset-0 flex items-center justify-center bg-dark-900/40 opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 transition-opacity duration-300">
             <div class="w-20 h-20 rounded-full bg-primary/95 flex items-center justify-center transform scale-90 group-hover:scale-100 group-focus-visible:scale-100 transition-all duration-300 shadow-lg backdrop-blur-sm">
-              <Icon icon="lucide:play" class="w-8 h-8 text-dark-900" />
+              <Icon icon="lucide:play" class="w-8 h-8 text-dark-900 translate-x-0.5" />
             </div>
           </div>
 
