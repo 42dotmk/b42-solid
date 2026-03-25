@@ -135,7 +135,7 @@ export default function VideoGrid(props: VideoGridProps) {
       </Show>
 
       <VideoModal
-        video={selectedVideo()!}
+        video={selectedVideo()}
         isOpen={!!selectedVideo()}
         onClose={() => setSelectedVideo(null)}
       />
