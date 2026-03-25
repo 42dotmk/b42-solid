@@ -149,14 +149,14 @@ const VideoModal: Component<VideoModalProps> = props => {
             <button
               ref={closeButtonRef}
               onClick={props.onClose}
-              class="absolute -top-12 right-0 p-2 text-text-muted hover:text-primary transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-dark-900 rounded-lg"
+              class="absolute -top-14 right-0 p-3 bg-dark-800/80 hover:bg-dark-700 text-text-muted hover:text-primary transition-all focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-dark-900 rounded-full shadow-lg backdrop-blur-sm"
               aria-label="Close video player"
             >
-              <Icon icon="lucide:x" class="w-8 h-8" />
+              <Icon icon="lucide:x" width={28} height={28} class="text-text-primary" />
             </button>
 
             {/* Video player container */}
-            <div class="relative aspect-video rounded-xl overflow-hidden bg-dark-800">
+            <div class="relative w-full aspect-video rounded-xl overflow-hidden bg-dark-800 shadow-2xl">
               {props.video && (
                 <LiteYouTubeEmbed
                   videoId={props.video.id}
