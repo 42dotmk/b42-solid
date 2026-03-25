@@ -10,6 +10,9 @@ export default defineConfig(({ mode }) => {
   process.env = { ...process.env, ...env };
 
   return {
+    server: {
+      port: 5173,
+    },
     plugins: [solidStart(), nitroV2Plugin(), tailwindcss()],
   };
 });
