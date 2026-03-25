@@ -1,5 +1,5 @@
 import { Icon } from "@iconify-icon/solid";
-import { For, Show, createMemo, createSignal } from "solid-js";
+import { For, Show, createMemo, createSignal, onMount, onCleanup } from "solid-js";
 import type { YouTubePlaylist, YouTubeVideo } from "~/types";
 import Reveal from "~/components/common/Reveal";
 import VideoCard from "./VideoCard";
@@ -14,6 +14,7 @@ export default function VideoGrid(props: VideoGridProps) {
   const [activeFilter, setActiveFilter] = createSignal("all");
   const [selectedVideo, setSelectedVideo] = createSignal<YouTubeVideo | null>(null);
   const [searchQuery, setSearchQuery] = createSignal("");
+  let searchInputRef: HTMLInputElement | undefined;
 
   const filterOptions = createMemo(() => [
     { id: "all", name: "All Videos" },
@@ -33,6 +34,22 @@ export default function VideoGrid(props: VideoGridProps) {
     })
   );
 
+  // Keyboard shortcut: '/' focuses search input
+  const handleKeyDown = (event: KeyboardEvent) => {
+    if (event.key === "/" && document.activeElement !== searchInputRef) {
+      event.preventDefault();
+      searchInputRef?.focus();
+    }
+  };
+
+  onMount(() => {
+    document.addEventListener("keydown", handleKeyDown);
+  });
+
+  onCleanup(() => {
+    document.removeEventListener("keydown", handleKeyDown);
+  });
+
   return (
     <>
       <div class="mb-8 space-y-4">
@@ -40,23 +57,27 @@ export default function VideoGrid(props: VideoGridProps) {
           <div class="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
             <div class="relative w-full sm:w-80">
               <input
+                ref={searchInputRef}
                 type="text"
                 placeholder="Search videos..."
+                aria-label="Search videos"
                 value={searchQuery()}
                 onInput={event => setSearchQuery(event.currentTarget.value)}
                 class="w-full px-4 py-2 rounded-lg bg-dark-800 border border-border text-text-primary placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
               />
               <Show when={searchQuery()}>
                 <button
+                  type="button"
                   onClick={() => setSearchQuery("")}
-                  class="absolute right-3 top-1/2 -translate-y-1/2 text-text-muted hover:text-text-primary"
+                  aria-label="Clear search"
+                  class="absolute right-3 top-1/2 -translate-y-1/2 text-text-muted hover:text-text-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-dark-900 rounded"
                 >
                   <Icon icon="lucide:x" class="w-4 h-4" />
                 </button>
               </Show>
             </div>
 
-            <p class="text-text-muted text-sm">
+            <p class="text-text-muted text-sm" aria-live="polite" aria-atomic="true">
               {filteredVideos().length} video{filteredVideos().length !== 1 ? "s" : ""}
             </p>
           </div>
@@ -68,11 +89,13 @@ export default function VideoGrid(props: VideoGridProps) {
               <For each={filterOptions()}>
                 {option => (
                   <button
+                    type="button"
                     onClick={() => setActiveFilter(option.id)}
+                    aria-pressed={activeFilter() === option.id}
                     class={
                       activeFilter() === option.id
-                        ? "px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 border bg-primary text-dark-900 border-primary"
-                        : "px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 border bg-dark-800 text-text-secondary border-border hover:border-primary hover:text-primary"
+                        ? "px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 border bg-primary text-dark-900 border-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-dark-900"
+                        : "px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 border bg-dark-800 text-text-secondary border-border hover:border-primary hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-dark-900"
                     }
                   >
                     {option.name}
