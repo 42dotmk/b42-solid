@@ -8,6 +8,7 @@ import CountUp from "~/components/common/CountUp";
 import Reveal from "~/components/common/Reveal";
 import EventCard from "~/components/events/EventCard";
 import VideoCard from "~/components/videos/VideoCard";
+import VideoModal from "~/components/videos/VideoModal";
 import Button from "~/components/ui/Button";
 import SectionHeader from "~/components/ui/SectionHeader";
 import Tag from "~/components/ui/Tag";
@@ -120,6 +121,7 @@ function UpcomingEventsSection() {
 
 function LatestVideosSection() {
   const [videos, setVideos] = createSignal<YouTubeVideo[] | null>(null);
+  const [selectedVideo, setSelectedVideo] = createSignal<YouTubeVideo | null>(null);
 
   onMount(async () => {
     const allVideos = await getChannelVideos();
@@ -151,7 +153,7 @@ function LatestVideosSection() {
             <For each={videos()!}>
               {(video, index) => (
                 <Reveal delay={index() * 100}>
-                  <VideoCard video={video} />
+                  <VideoCard video={video} onPlay={setSelectedVideo} />
                 </Reveal>
               )}
             </For>
@@ -166,6 +168,11 @@ function LatestVideosSection() {
               </A>
             </div>
           </Reveal>
+          <VideoModal
+            video={selectedVideo()}
+            isOpen={!!selectedVideo()}
+            onClose={() => setSelectedVideo(null)}
+          />
         </>
       </Show>
     </Show>
