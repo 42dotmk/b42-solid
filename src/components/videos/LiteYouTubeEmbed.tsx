@@ -133,7 +133,7 @@ const LiteYouTubeInner: Component<LiteYouTubeEmbedProps> = props => {
         playlabel={props.title ? `Play: ${props.title}` : "Play video"}
         title={props.title}
         poster={posterQuality()}
-        class={isLoaded() ? "rounded-lg overflow-hidden" : "hidden"}
+        class="rounded-lg overflow-hidden"
         style="width: 100%; height: 100%;"
       />
     </div>
