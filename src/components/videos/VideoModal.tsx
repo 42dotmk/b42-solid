@@ -5,7 +5,7 @@ import type { YouTubeVideo } from "~/types";
 import LiteYouTubeEmbed from "./LiteYouTubeEmbed";
 
 interface VideoModalProps {
-  video: YouTubeVideo;
+  video: YouTubeVideo | null;
   isOpen: boolean;
   onClose: () => void;
 }
@@ -129,7 +129,7 @@ const VideoModal: Component<VideoModalProps> = props => {
   };
 
   return (
-    <Show when={props.isOpen}>
+    <Show when={props.isOpen && props.video}>
       <Portal>
         {/* Modal backdrop with blur */}
         <div
@@ -157,26 +157,30 @@ const VideoModal: Component<VideoModalProps> = props => {
 
             {/* Video player container */}
             <div class="relative aspect-video rounded-xl overflow-hidden bg-dark-800">
-              <LiteYouTubeEmbed
-                videoId={props.video.id}
-                title={props.video.title}
-                poster="high"
-                class="w-full h-full"
-              />
+              {props.video && (
+                <LiteYouTubeEmbed
+                  videoId={props.video.id}
+                  title={props.video.title}
+                  poster="medium"
+                  class="w-full h-full"
+                />
+              )}
             </div>
 
             {/* Video title below player */}
-            <div class="mt-4">
-              <h3
-                id="video-modal-title"
-                class="font-display font-semibold text-xl text-text-primary"
-              >
-                {props.video.title}
-              </h3>
-              <Show when={props.video.viewCount}>
-                <p class="text-text-muted text-sm mt-1">{props.video.viewCount}</p>
-              </Show>
-            </div>
+            {props.video && (
+              <div class="mt-4">
+                <h3
+                  id="video-modal-title"
+                  class="font-display font-semibold text-xl text-text-primary"
+                >
+                  {props.video.title}
+                </h3>
+                <Show when={props.video.viewCount}>
+                  <p class="text-text-muted text-sm mt-1">{props.video.viewCount}</p>
+                </Show>
+              </div>
+            )}
           </div>
         </div>
       </Portal>
