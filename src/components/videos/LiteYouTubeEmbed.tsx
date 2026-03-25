@@ -1,4 +1,4 @@
-import { Component, onMount, createSignal } from "solid-js";
+import { Component, onMount, createSignal, createEffect } from "solid-js";
 import { ClientOnly } from "~/lib/client-only";
 
 // Import lite-youtube-embed CSS
@@ -47,26 +47,6 @@ export interface LiteYouTubeEmbedProps {
 }
 
 /**
- * Type augmentation for lite-youtube custom element
- * The lite-youtube-embed library registers this custom element globally
- */
-declare global {
-  namespace JSX {
-    interface IntrinsicElements {
-      "lite-youtube": {
-        videoid: string;
-        playlabel?: string;
-        title?: string;
-        poster?: string;
-        params?: string;
-        style?: string;
-        class?: string;
-      };
-    }
-  }
-}
-
-/**
  * Thumbnail quality mapping to YouTube thumbnail URLs
  * maxresdefault may not exist for all videos (fallback to high)
  */
@@ -102,14 +82,15 @@ const LoadingFallback: Component<{ title?: string }> = props => {
  * Handles dynamic import of the web component and CSS
  */
 const LiteYouTubeInner: Component<LiteYouTubeEmbedProps> = props => {
-  const [isLoaded, setIsLoaded] = createSignal(false);
+  const [isLibraryLoaded, setIsLibraryLoaded] = createSignal(false);
+  let containerRef: HTMLDivElement | undefined;
 
   onMount(async () => {
     // Dynamically import the lite-youtube-embed library
     // This ensures it only runs on the client
     try {
       await import("lite-youtube-embed/src/lite-yt-embed.js");
-      setIsLoaded(true);
+      setIsLibraryLoaded(true);
     } catch (error) {
       console.error("[LiteYouTubeEmbed] Failed to load lite-youtube-embed:", error);
     }
@@ -117,25 +98,32 @@ const LiteYouTubeInner: Component<LiteYouTubeEmbedProps> = props => {
 
   const posterQuality = () => POSTER_QUALITY_MAP[props.poster ?? "high"] ?? "hqdefault";
 
+  // Create the lite-youtube element programmatically after library loads
+  createEffect(() => {
+    if (isLibraryLoaded() && containerRef && props.videoId) {
+      // Create the custom element
+      const el = document.createElement("lite-youtube");
+      el.setAttribute("videoid", props.videoId);
+      el.setAttribute("playlabel", props.title ? `Play: ${props.title}` : "Play video");
+      if (props.title) {
+        el.setAttribute("title", props.title);
+      }
+      el.setAttribute("poster", posterQuality());
+      el.className = "rounded-lg overflow-hidden";
+      el.style.cssText = "width: 100%; height: 100%; display: block;";
+      
+      // Clear container and append element
+      containerRef.innerHTML = "";
+      containerRef.appendChild(el);
+    }
+  });
+
   return (
-    <div class={`relative aspect-video ${props.class ?? ""}`}>
-      {!isLoaded() && <LoadingFallback title={props.title} />}
-      {/* 
-        lite-youtube custom element attributes:
-        - videoid: YouTube video ID (required)
-        - playlabel: Accessible label for play button
-        - title: Video title (optional, for a11y)
-        - poster: Thumbnail quality (maxresdefault, hqdefault, mqdefault, default)
-        - params: Additional YouTube player parameters
-      */}
-      <lite-youtube
-        videoid={props.videoId}
-        playlabel={props.title ? `Play: ${props.title}` : "Play video"}
-        title={props.title}
-        poster={posterQuality()}
-        class="rounded-lg overflow-hidden"
-        style="width: 100%; height: 100%;"
-      />
+    <div 
+      ref={(el) => { containerRef = el; }}
+      class={`relative aspect-video ${props.class ?? ""}`}
+    >
+      {!isLibraryLoaded() && <LoadingFallback title={props.title} />}
     </div>
   );
 };
