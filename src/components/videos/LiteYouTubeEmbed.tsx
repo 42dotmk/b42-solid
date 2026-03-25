@@ -6,6 +6,32 @@ import { ClientOnly } from "~/lib/client-only";
 // and only renders on the client side
 import "lite-youtube-embed/src/lite-yt-embed.css";
 
+// Custom styles to enhance the play button - make it bigger and better centered
+const customStyles = `
+  /* Make play button bigger and better centered */
+  lite-youtube > .lyt-playbtn {
+    background-size: 100px 70px !important;
+    background-position: center center !important;
+  }
+  
+  /* Optional: Scale up on hover for better UX */
+  lite-youtube:hover > .lyt-playbtn {
+    transform: scale(1.1);
+    transition: transform 0.2s ease, filter 0.1s cubic-bezier(0, 0, 0.2, 1);
+  }
+`;
+
+// Inject custom styles
+if (typeof document !== 'undefined') {
+  const styleId = 'lite-youtube-custom-styles';
+  if (!document.getElementById(styleId)) {
+    const styleEl = document.createElement('style');
+    styleEl.id = styleId;
+    styleEl.textContent = customStyles;
+    document.head.appendChild(styleEl);
+  }
+}
+
 /**
  * LiteYouTubeEmbed - Fast-loading YouTube video embed using lite-youtube-embed
  * 
