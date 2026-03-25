@@ -1,8 +1,12 @@
+"use server";
+
 import type { YouTubePlaylist, YouTubeVideo } from "~/types";
 
-const YOUTUBE_API_KEY = import.meta.env.VITE_YOUTUBE_API_KEY;
 const YOUTUBE_API_BASE = "https://www.googleapis.com/youtube/v3";
-const CHANNEL_ID = import.meta.env.VITE_YOUTUBE_CHANNEL_ID || "YOUR_CHANNEL_ID";
+// @ts-ignore
+const getYoutubeApiKey = () => import.meta.env.YOUTUBE_API_KEY || process.env.YOUTUBE_API_KEY;
+// @ts-ignore
+const getChannelId = () => import.meta.env.VITE_PUBLIC_YOUTUBE_CHANNEL_ID || process.env.VITE_PUBLIC_YOUTUBE_CHANNEL_ID || "YOUR_CHANNEL_ID";
 const FETCH_TIMEOUT_MS = 5000;
 
 function fetchWithTimeout(url: string, timeoutMs = FETCH_TIMEOUT_MS): Promise<Response> {
@@ -12,7 +16,8 @@ function fetchWithTimeout(url: string, timeoutMs = FETCH_TIMEOUT_MS): Promise<Re
 }
 
 async function fetchAllPlaylistVideos(playlistId: string, playlistTitle?: string): Promise<YouTubeVideo[]> {
-  if (!YOUTUBE_API_KEY || !playlistId) {
+  const apiKey = getYoutubeApiKey();
+  if (!apiKey || !playlistId) {
     return [];
   }
 
@@ -23,7 +28,7 @@ async function fetchAllPlaylistVideos(playlistId: string, playlistTitle?: string
     do {
       const pageParam = nextPageToken ? `&pageToken=${nextPageToken}` : "";
       const response = await fetchWithTimeout(
-        `${YOUTUBE_API_BASE}/playlistItems?part=snippet,contentDetails&playlistId=${playlistId}&maxResults=50${pageParam}&key=${YOUTUBE_API_KEY}`
+        `${YOUTUBE_API_BASE}/playlistItems?part=snippet,contentDetails&playlistId=${playlistId}&maxResults=50${pageParam}&key=${apiKey}`
       );
 
       if (!response.ok) {
@@ -62,7 +67,8 @@ async function fetchAllPlaylistVideos(playlistId: string, playlistTitle?: string
 }
 
 async function enrichVideosWithDetails(videos: YouTubeVideo[]) {
-  if (!YOUTUBE_API_KEY || videos.length === 0) {
+  const apiKey = getYoutubeApiKey();
+  if (!apiKey || videos.length === 0) {
     return videos;
   }
 
@@ -73,7 +79,7 @@ async function enrichVideosWithDetails(videos: YouTubeVideo[]) {
       const batch = videos.slice(index, index + 50);
       const videoIds = batch.map(video => video.id).join(",");
       const response = await fetchWithTimeout(
-        `${YOUTUBE_API_BASE}/videos?part=contentDetails,statistics&id=${videoIds}&key=${YOUTUBE_API_KEY}`
+        `${YOUTUBE_API_BASE}/videos?part=contentDetails,statistics&id=${videoIds}&key=${apiKey}`
       );
 
       if (!response.ok) continue;
@@ -105,7 +111,8 @@ async function enrichVideosWithDetails(videos: YouTubeVideo[]) {
 }
 
 export async function getChannelPlaylists(): Promise<YouTubePlaylist[]> {
-  if (!YOUTUBE_API_KEY) {
+  const apiKey = getYoutubeApiKey();
+  if (!apiKey) {
     return [];
   }
 
@@ -116,7 +123,7 @@ export async function getChannelPlaylists(): Promise<YouTubePlaylist[]> {
     do {
       const pageParam = nextPageToken ? `&pageToken=${nextPageToken}` : "";
       const response = await fetchWithTimeout(
-        `${YOUTUBE_API_BASE}/playlists?part=snippet,contentDetails&channelId=${CHANNEL_ID}&maxResults=50${pageParam}&key=${YOUTUBE_API_KEY}`
+        `${YOUTUBE_API_BASE}/playlists?part=snippet,contentDetails&channelId=${getChannelId()}&maxResults=50${pageParam}&key=${apiKey}`
       );
 
       if (!response.ok) {
@@ -185,13 +192,14 @@ export async function getAllVideosFromPlaylists(playlists: YouTubePlaylist[]) {
 }
 
 export async function getChannelVideos() {
-  if (!YOUTUBE_API_KEY) {
+  const apiKey = getYoutubeApiKey();
+  if (!apiKey) {
     return [];
   }
 
   try {
     const channelResponse = await fetchWithTimeout(
-      `${YOUTUBE_API_BASE}/channels?part=contentDetails&id=${CHANNEL_ID}&key=${YOUTUBE_API_KEY}`
+      `${YOUTUBE_API_BASE}/channels?part=contentDetails&id=${getChannelId()}&key=${apiKey}`
     );
 
     if (!channelResponse.ok) {

@@ -14,11 +14,11 @@ export default function Footer() {
             </A>
             <p class="text-text-muted text-sm mb-4">A hackerspace for builders and the curious</p>
             <div class="flex items-center gap-2 text-text-muted text-sm">
-              <Icon icon="lucide:map-pin" class="w-4 h-4 text-primary" />
+              <Icon icon="lucide:map-pin" class="text-base text-primary" />
               <span>Rimska 25, Skopje</span>
             </div>
             <div class="flex items-center gap-2 text-text-muted text-sm mt-2">
-              <Icon icon="lucide:mail" class="w-4 h-4 text-primary" />
+              <Icon icon="lucide:mail" class="text-base text-primary" />
               <a href="mailto:[email protected]" class="hover:text-primary transition-colors">
                 [email protected]
               </a>
@@ -69,10 +69,10 @@ export default function Footer() {
                     href={social.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    class="p-2 rounded-lg bg-dark-700 text-text-muted hover:text-primary hover:bg-dark-600 transition-all"
+                    class="flex items-center justify-center w-9 h-9 rounded-lg bg-dark-700 text-text-muted hover:text-primary hover:bg-dark-600 transition-all"
                     aria-label={social.label}
                   >
-                    <Icon icon={social.icon} class="w-5 h-5" />
+                    <Icon icon={social.icon} class="text-xl" />
                   </a>
                 )}
               </For>
@@ -102,7 +102,7 @@ export default function Footer() {
             rel="noopener noreferrer"
             class="text-text-muted hover:text-primary transition-colors text-sm flex items-center gap-2"
           >
-            <Icon icon="lucide:github" class="w-4 h-4" />
+            <Icon icon="lucide:github" class="text-base" />
             View Source
           </a>
         </div>

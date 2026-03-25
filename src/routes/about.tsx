@@ -21,7 +21,7 @@ export default function About() {
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <Reveal>
             <A href="/" class="inline-flex items-center gap-2 text-text-muted hover:text-primary transition-colors mb-8">
-              <Icon icon="lucide:arrow-left" class="w-4 h-4" />
+              <Icon icon="lucide:arrow-left" class="text-base" />
               Back to Home
             </A>
           </Reveal>
@@ -219,8 +219,8 @@ export default function About() {
                 {(value, index) => (
                   <Reveal delay={index() * 100}>
                     <div class="p-6 rounded-xl bg-dark-700 border border-border hover:border-primary/50 transition-colors h-full">
-                      <div class="p-3 rounded-lg bg-primary/10 text-primary w-fit mb-4">
-                        <Icon icon={value.icon} class="w-6 h-6" />
+                      <div class="flex items-center justify-center rounded-lg bg-primary/10 text-primary w-12 h-12 mb-4 shrink-0">
+                        <Icon icon={value.icon} class="text-2xl" />
                       </div>
                       <h3 class="font-display font-semibold text-text-primary mb-2">{value.title}</h3>
                       <p class="text-sm text-text-muted">{value.description}</p>
@@ -265,9 +265,9 @@ export default function About() {
                 <For each={aboutTimeline}>
                   {(item, index) => (
                     <Reveal delay={index() * 100}>
-                      <div class={`relative flex flex-col md:flex-row gap-8 ${index() % 2 === 0 ? "md:flex-row-reverse" : ""}`}>
-                        <div class="absolute left-4 md:left-1/2 w-3 h-3 rounded-full bg-primary -translate-x-1/2 mt-2" />
-                        <div class={`flex-1 pl-12 md:pl-0 ${index() % 2 === 0 ? "md:pr-12 md:text-right" : "md:pl-12"}`}>
+                      <div class={`relative flex flex-col md:flex-row gap-8 ${index() % 2 === 0 ? "" : "md:flex-row-reverse"}`}>
+                        <div class="absolute left-4 md:left-1/2 w-3 h-3 rounded-full bg-primary -translate-x-1/2 mt-1" />
+                        <div class={`flex-1 pl-12 md:pl-0 ${index() % 2 === 0 ? "md:pr-12 md:text-right" : "md:pl-12 md:text-left"}`}>
                           <span class="text-primary font-mono text-sm">{item.year}</span>
                           <h3 class="text-xl font-display font-semibold text-text-primary mt-1 mb-2">{item.title}</h3>
                           <p class="text-text-muted">{item.description}</p>
@@ -304,8 +304,8 @@ export default function About() {
                   <h3 class="text-2xl font-display font-semibold text-text-primary mb-6">Get in Touch</h3>
                   <div class="space-y-4 mb-8">
                     <div class="flex items-start gap-4">
-                      <div class="p-2 rounded-lg bg-primary/10 text-primary">
-                        <Icon icon="lucide:map-pin" class="w-5 h-5" />
+                      <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-primary/10 text-primary shrink-0">
+                        <Icon icon="lucide:map-pin" class="text-xl" />
                       </div>
                       <div>
                         <div class="font-semibold text-text-primary">Location</div>
@@ -313,8 +313,8 @@ export default function About() {
                       </div>
                     </div>
                     <div class="flex items-start gap-4">
-                      <div class="p-2 rounded-lg bg-primary/10 text-primary">
-                        <Icon icon="lucide:mail" class="w-5 h-5" />
+                      <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-primary/10 text-primary shrink-0">
+                        <Icon icon="lucide:mail" class="text-xl" />
                       </div>
                       <div>
                         <div class="font-semibold text-text-primary">Email</div>

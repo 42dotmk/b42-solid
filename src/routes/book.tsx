@@ -41,7 +41,7 @@ export default function BookPage() {
           <Reveal>
             <div class="text-center max-w-md px-4">
               <div class="w-16 h-16 rounded-full bg-success/20 text-success flex items-center justify-center mx-auto mb-6">
-                <Icon icon="lucide:check-circle" class="w-8 h-8" />
+                <Icon icon="lucide:check-circle" class="text-4xl" />
               </div>
               <h1 class="text-3xl font-display font-bold text-text-primary mb-4">Request Submitted!</h1>
               <p class="text-text-secondary mb-8">
@@ -58,7 +58,7 @@ export default function BookPage() {
           <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <Reveal>
               <A href="/" class="inline-flex items-center gap-2 text-text-muted hover:text-primary transition-colors mb-8">
-                <Icon icon="lucide:arrow-left" class="w-4 h-4" />
+                <Icon icon="lucide:arrow-left" class="text-base" />
                 Back to Home
               </A>
             </Reveal>
@@ -77,14 +77,14 @@ export default function BookPage() {
                         selectedSpace() === space.id ? "border-primary bg-primary/10" : "border-border bg-dark-700 hover:border-primary/50"
                       )}
                     >
-                      <div class="flex items-center gap-3 mb-3">
+                      <div class="flex items-start gap-3 mb-3">
                         <div
                           class={cn(
-                            "p-2 rounded-lg",
+                            "flex items-center justify-center w-10 h-10 rounded-lg shrink-0",
                             selectedSpace() === space.id ? "bg-primary text-dark-900" : "bg-dark-600 text-text-secondary"
                           )}
                         >
-                          <Icon icon={space.icon} class="w-5 h-5" />
+                          <Icon icon={space.icon} class="text-xl" />
                         </div>
                         <div>
                           <h4 class="font-semibold text-text-primary">{space.title}</h4>
@@ -172,7 +172,7 @@ export default function BookPage() {
                         Expected Attendees *
                       </label>
                       <div class="relative">
-                        <Icon icon="lucide:users" class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-text-muted" />
+                        <Icon icon="lucide:users" class="absolute left-3 top-1/2 -translate-y-1/2 text-xl text-text-muted" />
                         <input
                           id="attendees"
                           type="number"
@@ -218,7 +218,7 @@ export default function BookPage() {
                       </>
                     ) : (
                       <>
-                        <Icon icon="lucide:send" class="w-5 h-5" />
+                        <Icon icon="lucide:send" class="text-xl" />
                         Submit Booking Request
                       </>
                     )}

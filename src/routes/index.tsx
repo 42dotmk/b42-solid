@@ -133,12 +133,12 @@ function LatestVideosSection() {
         fallback={
           <Reveal>
             <div class="text-center py-16 px-4 rounded-2xl bg-dark-900 border border-border">
-              <Icon icon="lucide:youtube" class="w-12 h-12 text-text-muted mx-auto mb-4" />
+              <Icon icon="lucide:youtube" class="text-6xl text-text-muted mx-auto mb-6" />
               <p class="text-text-secondary text-lg mb-4">No videos available yet.</p>
               <p class="text-text-muted mb-6">Subscribe to our YouTube channel for updates!</p>
               <a href={siteMeta.youtubeChannelUrl} target="_blank" rel="noopener noreferrer">
                 <Button>
-                  <Icon icon="lucide:youtube" class="w-4 h-4" />
+                  <Icon icon="lucide:youtube" class="text-lg" />
                   Subscribe on YouTube
                 </Button>
               </a>
@@ -342,8 +342,8 @@ export default function Home() {
               <For each={stats}>
                 {(stat, index) => (
                   <div class="text-center" style={{ "transition-delay": `${index() * 100}ms` }}>
-                    <div class="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-primary/10 text-primary mb-4">
-                      <Icon icon={stat.icon} class="w-6 h-6" />
+                    <div class="inline-flex items-center justify-center w-16 h-16 rounded-xl bg-primary/10 text-primary mb-4">
+                      <Icon icon={stat.icon} class="text-4xl" />
                     </div>
                     <div class="text-3xl md:text-4xl font-display font-bold text-primary mb-1">
                       <CountUp end={stat.value} suffix={stat.suffix} />
@@ -362,8 +362,8 @@ export default function Home() {
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
           <Reveal>
             <div class="rounded-2xl border border-primary/30 bg-dark-800/50 p-8 md:p-12 text-center">
-              <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-primary/10 text-primary mb-6">
-                <Icon icon="lucide:calendar-plus" class="w-8 h-8" />
+              <div class="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-primary/10 text-primary mb-6">
+                <Icon icon="lucide:calendar-plus" class="text-5xl" />
               </div>
               <h2 class="text-3xl md:text-4xl font-display font-bold text-text-primary mb-4">Host Your Event at Base42</h2>
               <p class="text-text-secondary text-lg max-w-2xl mx-auto mb-8">
@@ -371,21 +371,21 @@ export default function Home() {
               </p>
               <div class="flex flex-wrap justify-center gap-6 mb-8">
                 <div class="flex items-center gap-2 text-text-muted">
-                  <Icon icon="lucide:users" class="w-5 h-5 text-primary" />
+                  <Icon icon="lucide:users" class="text-xl text-primary" />
                   <span>Up to 80 people</span>
                 </div>
                 <div class="flex items-center gap-2 text-text-muted">
-                  <Icon icon="lucide:projector" class="w-5 h-5 text-primary" />
+                  <Icon icon="lucide:projector" class="text-xl text-primary" />
                   <span>A/V Equipment</span>
                 </div>
                 <div class="flex items-center gap-2 text-text-muted">
-                  <Icon icon="lucide:wrench" class="w-5 h-5 text-primary" />
+                  <Icon icon="lucide:wrench" class="text-xl text-primary" />
                   <span>Workshop Tools</span>
                 </div>
               </div>
               <A href="/book">
                 <Button size="lg">
-                  <Icon icon="lucide:calendar-plus" class="w-5 h-5" />
+                  <Icon icon="lucide:calendar-plus" class="text-xl" />
                   Book the Space
                 </Button>
               </A>
@@ -417,8 +417,8 @@ export default function Home() {
                 <Reveal delay={index() * 100}>
                   <div class="p-6 rounded-xl bg-dark-700 border border-border hover:border-primary/50 transition-all duration-300 group">
                     <div class="flex items-start gap-4">
-                      <div class="p-3 rounded-lg bg-primary/10 text-primary shrink-0">
-                        <Icon icon={project.icon} class="w-6 h-6" />
+                      <div class="flex items-center justify-center w-12 h-12 rounded-lg bg-primary/10 text-primary shrink-0">
+                        <Icon icon={project.icon} class="text-2xl" />
                       </div>
                       <div class="flex-1 min-w-0">
                         <h3 class="font-display font-semibold text-lg text-text-primary mb-2 group-hover:text-primary transition-colors">
@@ -540,12 +540,12 @@ export default function Home() {
                       </>
                     ) : formState() === "success" ? (
                       <>
-                        <Icon icon="lucide:check-circle" class="w-5 h-5" />
+                        <Icon icon="lucide:check-circle" class="text-xl" />
                         Message Sent!
                       </>
                     ) : (
                       <>
-                        <Icon icon="lucide:send" class="w-5 h-5" />
+                        <Icon icon="lucide:send" class="text-xl" />
                         Send Message
                       </>
                     )}
@@ -577,8 +577,8 @@ export default function Home() {
 
                 <div class="p-6 rounded-xl bg-dark-700 border border-border space-y-4">
                   <div class="flex items-start gap-4">
-                    <div class="p-2 rounded-lg bg-primary/10 text-primary">
-                      <Icon icon="lucide:map-pin" class="w-5 h-5" />
+                    <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-primary/10 text-primary shrink-0">
+                      <Icon icon="lucide:map-pin" class="text-xl" />
                     </div>
                     <div>
                       <h4 class="font-semibold text-text-primary">Location</h4>
@@ -587,8 +587,8 @@ export default function Home() {
                   </div>
 
                   <div class="flex items-start gap-4">
-                    <div class="p-2 rounded-lg bg-primary/10 text-primary">
-                      <Icon icon="lucide:mail" class="w-5 h-5" />
+                    <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-primary/10 text-primary shrink-0">
+                      <Icon icon="lucide:mail" class="text-xl" />
                     </div>
                     <div>
                       <h4 class="font-semibold text-text-primary">Email</h4>
