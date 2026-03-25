@@ -49,7 +49,7 @@ Edit `tokens/tokens.json` → run `pnpm tokens` → both platforms stay in sync.
 | `VITE_STRAPI_URL` | Strapi API URL (default: `https://cms.42.mk`) |
 | `VITE_YOUTUBE_API_KEY` | YouTube Data API v3 key |
 | `VITE_YOUTUBE_CHANNEL_ID` | YouTube channel ID |
-| `VITE_YOUTUBE_CHANNEL_URL` | YouTube channel URL (default: `https://youtube.com/@base42mk`) |
+| `VITE_YOUTUBE_CHANNEL_URL` | YouTube channel URL (default: `https://youtube.com/@42dotmk`) |
 
 ## Project Structure
 
