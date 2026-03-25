@@ -1,5 +1,6 @@
 import { Icon } from "@iconify-icon/solid";
 import { For, Show, createMemo, createSignal, onMount, onCleanup } from "solid-js";
+import { isServer } from "solid-js/web";
 import type { YouTubePlaylist, YouTubeVideo } from "~/types";
 import Reveal from "~/components/common/Reveal";
 import VideoCard from "./VideoCard";
@@ -34,20 +35,24 @@ export default function VideoGrid(props: VideoGridProps) {
     })
   );
 
-  // Keyboard shortcut: '/' focuses search input
+  // Keyboard shortcut: '/' focuses search input (client-side only)
   const handleKeyDown = (event: KeyboardEvent) => {
-    if (event.key === "/" && document.activeElement !== searchInputRef) {
+    if (!isServer && event.key === "/" && document.activeElement !== searchInputRef) {
       event.preventDefault();
       searchInputRef?.focus();
     }
   };
 
   onMount(() => {
-    document.addEventListener("keydown", handleKeyDown);
+    if (!isServer) {
+      document.addEventListener("keydown", handleKeyDown);
+    }
   });
 
   onCleanup(() => {
-    document.removeEventListener("keydown", handleKeyDown);
+    if (!isServer) {
+      document.removeEventListener("keydown", handleKeyDown);
+    }
   });
 
   return (

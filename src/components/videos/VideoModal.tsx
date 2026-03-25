@@ -1,6 +1,6 @@
 import { Icon } from "@iconify-icon/solid";
 import { Component, onMount, onCleanup, createEffect, Show } from "solid-js";
-import { Portal } from "solid-js/web";
+import { Portal, isServer } from "solid-js/web";
 import type { YouTubeVideo } from "~/types";
 import LiteYouTubeEmbed from "./LiteYouTubeEmbed";
 
@@ -35,8 +35,11 @@ const VideoModal: Component<VideoModalProps> = props => {
   /**
    * Store previous focus when modal opens
    * Restore focus when modal closes
+   * (Client-side only)
    */
   createEffect(() => {
+    if (isServer) return;
+
     if (props.isOpen) {
       // Store the currently focused element before we move focus
       previousActiveElement = document.activeElement;
@@ -100,15 +103,19 @@ const VideoModal: Component<VideoModalProps> = props => {
     }
   };
 
-  // Set up global keyboard listener
+  // Set up global keyboard listener (client-side only)
   onMount(() => {
-    document.addEventListener("keydown", handleKeyDown);
+    if (!isServer) {
+      document.addEventListener("keydown", handleKeyDown);
+    }
   });
 
   onCleanup(() => {
-    document.removeEventListener("keydown", handleKeyDown);
-    // Restore body scroll on cleanup
-    document.body.style.overflow = "";
+    if (!isServer) {
+      document.removeEventListener("keydown", handleKeyDown);
+      // Restore body scroll on cleanup
+      document.body.style.overflow = "";
+    }
   });
 
   /**
