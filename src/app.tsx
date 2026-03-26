@@ -4,6 +4,7 @@ import { FileRoutes } from "@solidjs/start/router";
 import { Suspense } from "solid-js";
 import Footer from "~/components/layout/Footer";
 import Navbar from "~/components/layout/Navbar";
+import CartDrawer from "~/components/shop/CartDrawer";
 import { siteMeta } from "~/data/site";
 import "./app.css";
 
@@ -26,6 +27,7 @@ export default function App() {
             <Navbar />
             <Suspense>{props.children}</Suspense>
             <Footer />
+            <CartDrawer />
           </>
         )}
       >

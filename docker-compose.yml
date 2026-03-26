@@ -1,0 +1,98 @@
+# Production: Full stack on bare metal Linux with Docker
+#
+# Usage:
+#   1. Copy .env.example to .env and fill in production values
+#   2. docker compose up -d --build
+#
+# Architecture:
+#   - postgres: Database for Medusa
+#   - redis: Cache, events, background jobs
+#   - medusa: Commerce API + admin dashboard (port 9000)
+#   - web: SolidStart storefront (port 3000)
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: b42_postgres
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}
+      POSTGRES_DB: ${POSTGRES_DB:-medusa-store}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: b42_redis
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  medusa:
+    build:
+      context: ./medusa-backend
+      dockerfile: Dockerfile
+      target: production
+    container_name: b42_medusa
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    ports:
+      - "${MEDUSA_PORT:-9000}:9000"
+    environment:
+      NODE_ENV: production
+      DATABASE_URL: postgres://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB:-medusa-store}
+      REDIS_URL: redis://redis:6379
+      JWT_SECRET: ${JWT_SECRET:?Set JWT_SECRET in .env}
+      COOKIE_SECRET: ${COOKIE_SECRET:?Set COOKIE_SECRET in .env}
+      STORE_CORS: ${STORE_CORS:?Set STORE_CORS in .env}
+      ADMIN_CORS: ${ADMIN_CORS:-http://localhost:9000}
+      AUTH_CORS: ${AUTH_CORS:-${STORE_CORS}}
+      MEDUSA_BACKEND_URL: ${MEDUSA_BACKEND_URL:-http://medusa:9000}
+      STRIPE_API_KEY: ${STRIPE_API_KEY:-}
+      STRIPE_WEBHOOK_SECRET: ${STRIPE_WEBHOOK_SECRET:-}
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q --spider http://localhost:9000/health || exit 1"]
+      interval: 15s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: b42_web
+    depends_on:
+      medusa:
+        condition: service_healthy
+    ports:
+      - "${WEB_PORT:-3000}:3000"
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      HOST: 0.0.0.0
+      VITE_MEDUSA_BACKEND_URL: ${MEDUSA_PUBLIC_URL:-http://localhost:9000}
+      VITE_MEDUSA_PUBLISHABLE_KEY: ${MEDUSA_PUBLISHABLE_KEY:?Set MEDUSA_PUBLISHABLE_KEY in .env}
+      MEDUSA_BACKEND_URL: http://medusa:9000
+      MEDUSA_PUBLISHABLE_KEY: ${MEDUSA_PUBLISHABLE_KEY}
+      SITE_URL: ${SITE_URL:-https://42.mk}
+      VITE_PUBLIC_YOUTUBE_CHANNEL_ID: ${VITE_PUBLIC_YOUTUBE_CHANNEL_ID:-}
+      YOUTUBE_API_KEY: ${YOUTUBE_API_KEY:-}
+      VITE_PUBLIC_STRAPI_URL: ${VITE_PUBLIC_STRAPI_URL:-https://cms.42.mk}
+    restart: unless-stopped
+
+volumes:
+  postgres_data:

@@ -1,6 +1,7 @@
 import { Icon } from "@iconify-icon/solid";
 import { A, useLocation } from "@solidjs/router";
 import { For, Show, createSignal, onCleanup, onMount } from "solid-js";
+import CartButton from "~/components/shop/CartButton";
 import { externalLinks, navLinks } from "~/data/site";
 import { cn } from "~/lib/utils";
 import Button from "~/components/ui/Button";
@@ -60,6 +61,7 @@ export default function Navbar() {
           </div>
 
           <div class="hidden md:flex items-center gap-3">
+            <CartButton />
             <A href="/book">
               <Button size="sm" variant="outline">
                 <Icon icon="lucide:calendar-plus" class="text-sm" />

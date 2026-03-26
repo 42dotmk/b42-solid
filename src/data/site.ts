@@ -24,6 +24,10 @@ const Sofa = "lucide:sofa";
 const Terminal = "lucide:terminal";
 const Users = "lucide:users";
 const Wrench = "lucide:wrench";
+const Video = "lucide:video";
+const Mic = "lucide:mic";
+const Camera = "lucide:camera";
+const Clapperboard = "lucide:clapperboard";
 const Youtube = "lucide:youtube";
 
 type IconComponent = string;
@@ -43,6 +47,8 @@ export const navLinks = [
   { label: "Events", href: "/events" },
   { label: "Videos", href: "/videos" },
   { label: "Projects", href: "/projects" },
+  { label: "Shop", href: "/shop" },
+  { label: "Studio", href: "/studio" },
   { label: "Contact", href: "/#contact" },
 ];
 
@@ -239,6 +245,52 @@ export const bookSpaceOptions: { id: string; icon: IconComponent; title: string;
     },
   ];
 
+export const studioPackages: { id: string; icon: IconComponent; title: string; duration: string; description: string; includes: string[] }[] =
+  [
+    {
+      id: "podcast",
+      icon: Mic,
+      title: "Podcast Session",
+      duration: "2 hours",
+      description: "Everything you need to record a professional podcast episode. Ideal for interviews, roundtables, and solo episodes.",
+      includes: ["2x condenser mics", "Audio interface & mixer", "Acoustic treatment", "Basic editing guidance"],
+    },
+    {
+      id: "video",
+      icon: Video,
+      title: "Video Production",
+      duration: "Half day (4 hours)",
+      description: "Full video setup for tutorials, course content, product demos, and YouTube-style productions.",
+      includes: ["Camera & tripod", "Ring light & softboxes", "Teleprompter", "Green screen (optional)", "Lav + shotgun mics"],
+    },
+    {
+      id: "livestream",
+      icon: Clapperboard,
+      title: "Livestream Setup",
+      duration: "Flexible",
+      description: "Multi-camera livestream rig for events, panels, or live coding sessions. We handle the tech, you handle the content.",
+      includes: ["2-camera setup", "Streaming PC with OBS", "Scene switching", "Chat overlay", "Stream to any platform"],
+    },
+  ];
+
+export const studioFeatures: { icon: IconComponent; title: string; description: string }[] = [
+  {
+    icon: Camera,
+    title: "Pro Equipment",
+    description: "Sony mirrorless cameras, Røde microphones, Elgato lighting, and a fully treated acoustic space.",
+  },
+  {
+    icon: Video,
+    title: "Post-Production",
+    description: "Need editing help? We can connect you with community editors or provide the raw files for your own workflow.",
+  },
+  {
+    icon: Users,
+    title: "Operator Included",
+    description: "A Base42 volunteer operates the gear so you can focus on your content. No technical expertise required.",
+  },
+];
+
 export const fullProjects: { [key: string]: any }[] = [
   {
     name: "Colosseum",
@@ -292,7 +344,7 @@ export const fullProjects: { [key: string]: any }[] = [
     name: "Base42 Web",
     slug: "web",
     description:
-      "The website you're looking at right now. Built with Next.js, Tailwind CSS, and powered by Strapi CMS. A modern, open source website for the community.",
+      "The website you're looking at right now. Built with SolidStart, Tailwind CSS, and powered by MedusaJS. A modern, open source website for the community.",
     longDescription:
       "This very website is open source! We believe in practicing what we preach. If you want to learn modern web development with Next.js, Tailwind, and headless CMS integration, this is a great place to start.",
     icon: Globe,
