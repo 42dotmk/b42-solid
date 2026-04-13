@@ -68,12 +68,12 @@ export default function Navbar() {
                 Book Space
               </Button>
             </A>
-            <a href="https://wts.sh" target="_blank" rel="noopener noreferrer">
+            <A href="/membership">
               <Button size="sm">
-                GET TIX
-                <Icon icon="lucide:external-link" class="text-xs" />
+                <Icon icon="lucide:user-plus" class="text-sm" />
+                Become a Member
               </Button>
-            </a>
+            </A>
           </div>
 
           <button
@@ -130,12 +130,12 @@ export default function Navbar() {
                   Book Space
                 </Button>
               </A>
-              <a href="https://wts.sh" target="_blank" rel="noopener noreferrer" onClick={() => setIsOpen(false)}>
+              <A href="/membership" onClick={() => setIsOpen(false)}>
                 <Button size="lg" class="w-full">
-                  GET TIX
-                  <Icon icon="lucide:external-link" class="text-base" />
+                  <Icon icon="lucide:user-plus" class="text-base" />
+                  Become a Member
                 </Button>
-              </a>
+              </A>
             </div>
           </div>
         </div>

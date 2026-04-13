@@ -130,6 +130,11 @@ const faqs = [
     answer:
       "Usually as soon as we review your form and complete onboarding. We aim to make the process lightweight so you can get in and start using the space fast.",
   },
+  {
+    question: "Can I get membership through volunteering instead of paying?",
+    answer:
+      "Yes. Regular volunteers who contribute weekly get free full membership — same 24/7 access, same tools, same perks. Help with events, A/V, space maintenance, or open source projects. Dedicated long-term volunteers also earn speaker opportunities, reference letters, and internship pathway credits.",
+  },
 ];
 
 export default function MembershipPage() {
@@ -252,6 +257,62 @@ export default function MembershipPage() {
                 )}
               </For>
             </div>
+          </section>
+
+          <section class="mb-20">
+            <Reveal>
+              <div class="relative overflow-hidden rounded-2xl border border-border bg-dark-800 p-8 md:p-12">
+                <div class="absolute inset-0 bg-gradient-to-br from-secondary/5 via-transparent to-primary/5" />
+                <div class="relative grid lg:grid-cols-2 gap-8 items-center">
+                  <div>
+                    <span class="inline-flex items-center gap-2 rounded-full border border-secondary/30 bg-secondary/10 px-4 py-2 text-sm text-secondary mb-6">
+                      <Icon icon="lucide:hand-helping" class="text-base" />
+                      Alternative path
+                    </span>
+                    <h2 class="text-3xl md:text-4xl font-display font-bold text-text-primary mb-4">
+                      Can't pay? <span class="text-secondary">Volunteer.</span>
+                    </h2>
+                    <p class="text-lg text-text-secondary leading-relaxed mb-4">
+                      Membership shouldn't be blocked by budget. If you're willing to contribute your time instead,
+                      volunteering gives you the same access — no money required.
+                    </p>
+                    <p class="text-text-secondary leading-relaxed mb-6">
+                      Help with event setup, A/V production, space maintenance, community outreach, or open source projects.
+                      Start with a few hours a month and grow from there.
+                    </p>
+                    <div class="grid sm:grid-cols-3 gap-4 mb-8">
+                      <div class="rounded-xl bg-dark-700 border border-border p-4">
+                        <div class="text-xs uppercase tracking-[0.22em] text-text-muted mb-2">Casual</div>
+                        <div class="text-sm text-text-secondary">A few hours/month — free event access, Discord role</div>
+                      </div>
+                      <div class="rounded-xl bg-dark-700 border border-secondary/30 p-4">
+                        <div class="text-xs uppercase tracking-[0.22em] text-secondary mb-2">Regular</div>
+                        <div class="text-sm text-text-secondary">Weekly — free membership, merch, equipment priority</div>
+                      </div>
+                      <div class="rounded-xl bg-dark-700 border border-primary/30 p-4">
+                        <div class="text-xs uppercase tracking-[0.22em] text-primary mb-2">Dedicated</div>
+                        <div class="text-sm text-text-secondary">Long-term — internship pathway, speaker slots, references</div>
+                      </div>
+                    </div>
+                    <A href="/volunteering" class="inline-flex">
+                      <Button type="button" size="lg" variant="secondary">
+                        <Icon icon="lucide:hand-helping" class="text-lg" />
+                        Learn About Volunteering
+                      </Button>
+                    </A>
+                  </div>
+                  <div class="relative rounded-2xl overflow-hidden min-h-[300px] bg-dark-700 hidden lg:block">
+                    <img
+                      src="/images/space-events.jpg"
+                      alt="Volunteers helping at a Base42 event"
+                      class="w-full h-full object-cover"
+                    />
+                    <div class="absolute inset-0 bg-gradient-to-t from-dark-900/60 via-transparent to-transparent" />
+                    <div class="absolute bottom-4 left-4 text-sm text-text-muted font-mono">// time &gt; money</div>
+                  </div>
+                </div>
+              </div>
+            </Reveal>
           </section>
 
           <section class="mb-20">

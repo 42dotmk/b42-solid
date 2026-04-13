@@ -44,13 +44,9 @@ export const siteMeta = {
 export const navLinks = [
   { label: "Home", href: "/" },
   { label: "About", href: "/about" },
-  { label: "Space", href: "/space" },
   { label: "Events", href: "/events" },
-  { label: "Conferences", href: "/conferences" },
   { label: "Videos", href: "/videos" },
-  { label: "Projects", href: "/projects" },
   { label: "Shop", href: "/shop" },
-  { label: "Studio", href: "/studio" },
   { label: "Contact", href: "/#contact" },
 ];
 
@@ -61,11 +57,13 @@ export const externalLinks = [
 ];
 
 export const footerQuickLinks = [
-  { label: "About", href: "/#about" },
+  { label: "About", href: "/about" },
+  { label: "Who Is It For", href: "/for" },
   { label: "Space", href: "/space" },
   { label: "Events", href: "/events" },
   { label: "Conferences", href: "/conferences" },
-  { label: "Projects", href: "/#projects" },
+  { label: "Projects", href: "/projects" },
+  { label: "Studio", href: "/studio" },
   { label: "Contact", href: "/#contact" },
 ];
 
@@ -92,25 +90,37 @@ export const facilities: { icon: IconComponent; title: string; description: stri
     icon: Projector,
     title: "Event Hall",
     description: "Full stage with professional A/V, seating for up to 120 people, and a setup that handles talks, hackathons, and live events.",
-    image: "/images/space-events.jpg",
+    image: "/images/main-area.jpeg",
   },
   {
     icon: Sofa,
     title: "The Living Room",
     description: "Kitchen, bookshelf, sofa, bean bags, 4K TV, game consoles, and a fridge usually stocked with beer.",
-    image: "/images/space-lounge.jpg",
+    image: "/images/IMG_3250.JPG",
   },
   {
     icon: Wrench,
     title: "Electronics Workshop",
     description: "Soldering stations, components, diodes, chips — everything you need to build, fix, and prototype hardware.",
-    image: "/images/space-workshop.jpg",
+    image: "/images/electronics.jpg",
   },
   {
     icon: Printer,
     title: "3D Printing",
     description: "Printers hooked up to a server so you can prototype on-site or send prints from home.",
-    image: "/images/space-3dprint.jpg",
+    image: "/images/3d-printer-jacuzzi.jpg",
+  },
+  {
+    icon: Server,
+    title: "Server Rack & Datacenter",
+    description: "Two server racks on-site hosting Base42 services. Available for members to tinker with, learn, and use.",
+    image: "/images/servers-datacenter-rack.jpg",
+  },
+  {
+    icon: Gamepad2,
+    title: "Retro Gaming Jacuzzi",
+    description: "A jacuzzi filled with retro consoles, a retro TV, and an SNES. Our unofficial retro gaming lounge.",
+    image: "/images/jacuzzi.jpg",
   },
 ];
 

@@ -330,12 +330,12 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="facilities" class="py-24 bg-dark-900">
+      <section id="facilities" class="py-20 bg-dark-900">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeader title="Our Space" subtitle="Everything you need to build, learn, and connect" />
 
           <Reveal>
-            <div class="relative aspect-video md:aspect-[21/9] rounded-2xl overflow-hidden border border-border bg-dark-800 mb-6">
+            <div class="relative aspect-video md:aspect-[21/9] rounded-2xl overflow-hidden border border-border bg-dark-800 mb-4">
               <For each={facilities}>
                 {(facility, i) => (
                   <img
@@ -345,9 +345,9 @@ export default function Home() {
                   />
                 )}
               </For>
-              <div class="absolute inset-0 bg-gradient-to-t from-dark-900 via-dark-900/40 to-transparent" />
+              <div class="absolute inset-0 bg-gradient-to-t from-dark-900 via-dark-900/30 to-transparent" />
               <div class="absolute inset-x-0 bottom-0 p-6 md:p-8">
-                <div class="flex items-center gap-3 mb-2">
+                <div class="flex items-center gap-3 mb-1">
                   <div class="p-2 rounded-lg bg-primary/10 text-primary backdrop-blur-sm">
                     <Icon icon={facilities[selectedFacility()].icon} class="text-xl" />
                   </div>
@@ -355,44 +355,46 @@ export default function Home() {
                     {facilities[selectedFacility()].title}
                   </h3>
                 </div>
-                <p class="text-text-secondary max-w-lg">
+                <p class="text-text-secondary max-w-lg text-sm md:text-base">
                   {facilities[selectedFacility()].description}
                 </p>
               </div>
             </div>
           </Reveal>
 
-          <Reveal delay={150}>
-            <div class="overflow-x-auto scrollbar-hide -mx-4 px-4 sm:mx-0 sm:px-0">
-              <div class="flex gap-3 w-max sm:w-full sm:grid sm:grid-cols-4">
-                <For each={facilities}>
-                  {(facility, index) => (
-                    <button
-                      type="button"
-                      onClick={() => setSelectedFacility(index())}
-                      class={`flex items-center gap-3 rounded-xl border p-4 transition-all duration-200 text-left shrink-0 w-56 sm:w-auto cursor-pointer ${index() === selectedFacility()
-                        ? "border-primary bg-primary/10"
-                        : "border-border bg-dark-700 hover:border-primary/30"
-                        }`}
-                    >
-                      <div class={`p-2 rounded-lg shrink-0 ${index() === selectedFacility() ? "bg-primary/20 text-primary" : "bg-dark-600 text-text-muted"}`}>
-                        <Icon icon={facility.icon} class="text-lg" />
-                      </div>
-                      <div class="min-w-0">
-                        <h3 class={`font-display font-semibold text-sm ${index() === selectedFacility() ? "text-primary" : "text-text-primary"}`}>
-                          {facility.title}
-                        </h3>
-                        <p class="text-xs text-text-muted truncate">{facility.description}</p>
-                      </div>
-                    </button>
-                  )}
-                </For>
-              </div>
+          <Reveal delay={100}>
+            <div class="grid grid-cols-3 md:grid-cols-6 gap-2">
+              <For each={facilities}>
+                {(facility, index) => (
+                  <button
+                    type="button"
+                    onClick={() => setSelectedFacility(index())}
+                    class={`group relative rounded-xl overflow-hidden border transition-all duration-200 cursor-pointer ${index() === selectedFacility()
+                      ? "border-primary ring-1 ring-primary/50"
+                      : "border-border hover:border-primary/30"
+                      }`}
+                  >
+                    <div class="aspect-[4/3] relative">
+                      <img
+                        src={facility.image}
+                        alt={facility.title}
+                        class="w-full h-full object-cover"
+                      />
+                      <div class={`absolute inset-0 transition-opacity duration-200 ${index() === selectedFacility() ? "bg-primary/10" : "bg-dark-900/40 group-hover:bg-dark-900/20"}`} />
+                    </div>
+                    <div class={`px-2 py-1.5 text-center ${index() === selectedFacility() ? "bg-primary/10" : "bg-dark-800"}`}>
+                      <span class={`font-display font-semibold text-xs truncate block ${index() === selectedFacility() ? "text-primary" : "text-text-muted"}`}>
+                        {facility.title}
+                      </span>
+                    </div>
+                  </button>
+                )}
+              </For>
             </div>
           </Reveal>
 
-          <Reveal delay={250}>
-            <div class="mt-8 text-center">
+          <Reveal delay={200}>
+            <div class="mt-6 text-center">
               <A href="/space">
                 <Button variant="outline" size="lg">
                   Explore the Full Space

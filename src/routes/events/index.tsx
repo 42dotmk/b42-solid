@@ -33,6 +33,17 @@ export default function EventsPage() {
             </Reveal>
 
             <SectionHeader title="Events" subtitle="Where builders, hackers, and curious minds gather" />
+
+            <Reveal>
+              <A
+                href="/events/calendar"
+                class="inline-flex items-center gap-2 rounded-full border border-border bg-dark-800 px-4 py-2 text-sm text-text-secondary hover:text-primary hover:border-primary/40 transition-colors"
+              >
+                <Icon icon="lucide:calendar" class="text-base text-primary" />
+                View full calendar
+                <Icon icon="lucide:arrow-right" class="text-sm" />
+              </A>
+            </Reveal>
           </div>
 
           <Show when={data()}>
