@@ -89,28 +89,28 @@ export const socials: { icon: IconComponent; href: string; label: string }[] = [
 
 export const facilities: { icon: IconComponent; title: string; description: string; image: string }[] = [
   {
-    icon: Printer,
-    title: "3D Printing",
-    description: "Access to 3D printers for prototyping your ideas. From concept to physical object in hours.",
-    image: "/images/space-3dprint.jpg",
-  },
-  {
-    icon: Sofa,
-    title: "Lounge",
-    description: "Comfortable space to relax, network, and have casual conversations with fellow hackers.",
-    image: "/images/space-lounge.jpg",
-  },
-  {
-    icon: Calendar,
-    title: "Events Hall",
-    description: "Host meetups, talks, and presentations. Equipped with projector, sound system, and seating for 50+ people.",
+    icon: Projector,
+    title: "Event Hall",
+    description: "Full stage with professional A/V, seating for up to 120 people, and a setup that handles talks, hackathons, and live events.",
     image: "/images/space-events.jpg",
   },
   {
+    icon: Sofa,
+    title: "The Living Room",
+    description: "Kitchen, bookshelf, sofa, bean bags, 4K TV, game consoles, and a fridge usually stocked with beer.",
+    image: "/images/space-lounge.jpg",
+  },
+  {
     icon: Wrench,
-    title: "Workshops",
-    description: "Hands-on workspace with tools and workbenches for hardware projects, electronics, and making.",
+    title: "Electronics Workshop",
+    description: "Soldering stations, components, diodes, chips — everything you need to build, fix, and prototype hardware.",
     image: "/images/space-workshop.jpg",
+  },
+  {
+    icon: Printer,
+    title: "3D Printing",
+    description: "Printers hooked up to a server so you can prototype on-site or send prints from home.",
+    image: "/images/space-3dprint.jpg",
   },
 ];
 

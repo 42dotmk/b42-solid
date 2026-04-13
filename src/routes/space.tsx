@@ -7,102 +7,117 @@ import Button from "~/components/ui/Button";
 import SectionHeader from "~/components/ui/SectionHeader";
 import { siteMeta } from "~/data/site";
 
-const galleryImages = [
-  {
-    src: "/images/hero-space.jpg",
-    alt: "The main Base42 space",
-    title: "Main Floor",
-    caption: "The central heartbeat of Base42 in Rimska 25.",
-    aspect: "aspect-video md:col-span-2",
-  },
-  {
-    src: "/images/space-events.jpg",
-    alt: "Events hall at Base42",
-    title: "Events Hall",
-    caption: "Talks, demos, screenings, and community nights.",
-    aspect: "aspect-square",
-  },
-  {
-    src: "/images/space-workshop.jpg",
-    alt: "Workshop area at Base42",
-    title: "Workshop Zone",
-    caption: "Hands-on making, soldering, repair, and prototyping.",
-    aspect: "aspect-square",
-  },
-  {
-    src: "/images/space-3dprint.jpg",
-    alt: "3D printers at Base42",
-    title: "3D Printing",
-    caption: "Rapid iteration from sketch to physical object.",
-    aspect: "aspect-video",
-  },
-  {
-    src: "/images/space-lounge.jpg",
-    alt: "Lounge area at Base42",
-    title: "Lounge",
-    caption: "Coffee, conversation, and late-night problem solving.",
-    aspect: "aspect-video",
-  },
-] as const;
-
-const facilities = [
+// ── Main Area highlights ──────────────────────────────────────────────
+const mainAreaFeatures = [
   {
     icon: "lucide:projector",
-    title: "Events Hall",
-    description: "Flexible seating for 50+ people with projector, presentation setup, and clear room sound.",
+    title: "Event Hall",
+    description:
+      "Up to 80 people in standard layout, around 100 using both projectors and the full L-shape of the room. Reconfigure with chairs or tables for workshops and hackathons — max capacity 120.",
   },
   {
-    icon: "lucide:wrench",
-    title: "Workshop",
-    description: "Workbenches for building, fixing, soldering, and testing ideas with other makers nearby.",
+    icon: "lucide:mic-2",
+    title: "Full Stage & A/V",
+    description:
+      "Professional-grade audio, video equipment, and lighting. A mixer, capture cards, and everything needed to perform, present, record, or livestream any type of event.",
   },
   {
-    icon: "lucide:printer",
-    title: "3D Printing",
-    description: "Multiple printers ready for prototypes, enclosures, functional parts, and rapid experiments.",
+    icon: "lucide:server",
+    title: "Server Rack & Mini Datacenter",
+    description:
+      "Two server racks on-site. The Base42 website and most related services are hosted right here. Available for all members to tinker with, learn, and use.",
   },
   {
-    icon: "lucide:sofa",
-    title: "Lounge",
-    description: "Soft seating, coffee energy, and the kind of relaxed corner where collaborations usually start.",
-  },
-  {
-    icon: "lucide:wifi",
-    title: "High-Speed Internet",
-    description: "Gigabit fiber for livestreams, remote calls, large downloads, and every hackathon emergency.",
-  },
-  {
-    icon: "lucide:door-open",
-    title: "Meeting Room",
-    description: "A quieter room for focused work, calls, planning sessions, and small team conversations.",
+    icon: "lucide:coffee",
+    title: "Coffee Machine",
+    description:
+      "A vending machine serving espresso and other types of coffee — easily and on the cheap. Fuel for late-night debugging sessions and early morning hackathons.",
   },
 ] as const;
 
+// ── Living Room features ──────────────────────────────────────────────
+const livingRoomFeatures = [
+  {
+    icon: "lucide:cooking-pot",
+    title: "Full Kitchen",
+    description: "Microwave, tea kettle, pots, and a fridge usually stocked with beer — available to visitors if they leave a donation.",
+  },
+  {
+    icon: "lucide:book-open",
+    title: "The Bookshelf",
+    description: "Divides the kitchen from the living room. Filled with books, fun gadgets, and of course a full copy of The Hitchhiker's Guide to the Galaxy.",
+  },
+  {
+    icon: "lucide:gamepad-2",
+    title: "Chill Zone",
+    description: "Sofa, bean bags, a 4K TV with game consoles hooked up and ready to go. Plus a makeshift mini table — two tires and a glass on top.",
+  },
+] as const;
+
+// ── A/V & Stage equipment ─────────────────────────────────────────────
 const equipmentCategories = [
   {
     icon: "lucide:mic-2",
     title: "Pro Audio",
-    details: ["Dynamic and condenser microphones", "Mixer and monitoring chain", "Clean voice capture for events and recordings"],
+    details: [
+      "Dynamic and condenser microphones",
+      "Mixer and full monitoring chain",
+      "Clean voice capture for events and recordings",
+    ],
   },
   {
     icon: "lucide:video",
     title: "Video",
-    details: ["Cameras and production lights", "Flexible framing for demos and interviews", "Green screen support for creative setups"],
+    details: [
+      "Cameras and production lights",
+      "Flexible framing for demos and interviews",
+      "Green screen support for creative setups",
+    ],
   },
   {
     icon: "lucide:radio",
     title: "Stage",
-    details: ["PA coverage for talks and performances", "Wireless microphones for presenters", "Reliable event-ready playback and amplification"],
+    details: [
+      "PA coverage for talks and performances",
+      "Wireless microphones for presenters",
+      "Reliable event-ready playback and amplification",
+    ],
   },
   {
     icon: "lucide:clapperboard",
-    title: "Recording",
-    details: ["Podcast and video sessions", "Livestream workflows powered by OBS", "Capture for tutorials, launches, and community archives"],
+    title: "Recording & Streaming",
+    details: [
+      "Capture cards for multi-source recording",
+      "Livestream workflows powered by OBS",
+      "Podcast, tutorial, and community archive sessions",
+    ],
   },
 ] as const;
 
-const productionFormats = ["Podcasts", "Tutorials", "Livestreams", "Product demos"] as const;
+// ── Hidden Gems ───────────────────────────────────────────────────────
+const hiddenGems = [
+  {
+    icon: "lucide:flame",
+    title: "Sauna & Turkish Bath",
+    description:
+      "Yes, we have a sauna and a Turkish bath. Yes, they actually work. No, they're mostly used for storage right now. But if you're feeling adventurous, they're there.",
+    image: "/images/hero-space.jpg",
+    imageAlt: "The sauna and Turkish bath area at Base42",
+  },
+  {
+    icon: "lucide:joystick",
+    title: "The Retro Jacuzzi",
+    description:
+      "A fully functioning jacuzzi — filled not with water but with retro consoles, a retro TV, and an SNES. It's our unofficial retro gaming lounge. Don't ask how it happened. Just enjoy it.",
+    image: "/images/jacuzzi.jpg",
+    imageAlt: "Retro gaming setup in the jacuzzi at Base42",
+  },
+] as const;
 
+// ── Production formats ────────────────────────────────────────────────
+const productionFormats = ["Podcasts", "Tutorials", "Livestreams", "Product demos", "Hackathons"] as const;
+
+// ── Location & CTA ────────────────────────────────────────────────────
 const locationFacts = [
   { icon: "lucide:map-pin", label: "Address", value: "Rimska 25, Skopje, North Macedonia" },
   { icon: "lucide:mail", label: "Email", value: "hello@42.mk" },
@@ -131,11 +146,12 @@ export default function SpacePage() {
       <Title>{siteMeta.titleTemplate("The Space")}</Title>
       <Meta
         name="description"
-        content="Explore Base42's physical space at Rimska 25 in Skopje, including facilities, equipment, production capabilities, and booking options."
+        content="Explore Base42's physical space at Rimska 25 in Skopje — event hall, living room, electronics workshop, 3D printing, server rack, and a jacuzzi full of retro consoles."
       />
 
       <div class="min-h-screen pt-24 pb-16">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* ── Back link ──────────────────────────────────────────── */}
           <Reveal>
             <A href="/" class="inline-flex items-center gap-2 text-text-muted hover:text-primary transition-colors mb-8">
               <Icon icon="lucide:arrow-left" class="text-base" />
@@ -143,6 +159,7 @@ export default function SpacePage() {
             </A>
           </Reveal>
 
+          {/* ── Hero ───────────────────────────────────────────────── */}
           <section class="mb-20">
             <Reveal>
               <div class="relative overflow-hidden rounded-2xl border border-border bg-dark-800">
@@ -151,7 +168,7 @@ export default function SpacePage() {
                 <div class="absolute inset-0 bg-gradient-to-r from-primary/15 via-transparent to-secondary/10" />
                 <div class="grid lg:grid-cols-2 gap-6 items-stretch relative">
                   <div class="relative min-h-[300px] lg:min-h-[400px] overflow-hidden rounded-2xl">
-                    <img src="/images/hero-space.jpg" alt="Base42 space in Skopje" class="w-full h-full object-cover" />
+                    <img src="/images/hero-space.jpg" alt="Base42 hackerspace interior in Skopje" class="w-full h-full object-cover" />
                     <div class="absolute inset-0 bg-gradient-to-t from-dark-900 via-dark-900/35 to-transparent" />
                   </div>
                   <div class="relative z-10 flex items-end p-8">
@@ -162,7 +179,7 @@ export default function SpacePage() {
                       </div>
                       <SectionHeader
                         title="The Space"
-                        subtitle="Base42's physical home in Skopje — built for workshops, recordings, events, collaboration, and long conversations after the laptops close."
+                        subtitle="An event hall, a living room, an electronics workshop, a 3D printing station, a server rack, and a jacuzzi full of retro consoles. All under one roof."
                         align="left"
                         class="mb-8"
                       />
@@ -190,42 +207,50 @@ export default function SpacePage() {
             </Reveal>
           </section>
 
+          {/* ── Main Area / Event Hall ─────────────────────────────── */}
           <section class="mb-20">
-            <SectionHeader title="Inside Base42" subtitle="A compact visual tour of the rooms, moods, and maker energy inside the space." />
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              <For each={galleryImages}>
-                {(image, index) => (
-                  <Reveal delay={index() * 80}>
-                    <div class={`group relative ${image.aspect} rounded-2xl overflow-hidden border border-border bg-dark-800`}>
-                      <img
-                        src={image.src}
-                        alt={image.alt}
-                        class="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
-                      />
-                      <div class="absolute inset-0 bg-gradient-to-t from-dark-900 via-dark-900/10 to-transparent" />
-                      <div class="absolute inset-x-0 bottom-0 p-6">
-                        <p class="text-xs uppercase tracking-[0.24em] text-primary/80 mb-2">{image.title}</p>
-                        <h3 class="text-lg font-display font-semibold text-text-primary mb-1">{image.caption}</h3>
-                      </div>
-                    </div>
-                  </Reveal>
-                )}
-              </For>
-            </div>
-          </section>
+            <SectionHeader
+              title="The Main Area"
+              subtitle="The beating heart of Base42 — where presentations happen, hackathons run overnight, and the servers never sleep."
+            />
 
-          <section class="mb-20">
-            <SectionHeader title="Facilities" subtitle="Everything needed for public events, quiet work, fabrication, and community hangouts." />
-            <div class="grid md:grid-cols-2 xl:grid-cols-3 gap-6">
-              <For each={facilities}>
-                {(facility, index) => (
+            <Reveal>
+              <div class="relative aspect-video md:aspect-[21/9] rounded-2xl overflow-hidden border border-border bg-dark-800 mb-8">
+                <img
+                  src="/images/main-area.jpeg"
+                  alt="Base42 main event hall with stage and seating"
+                  class="w-full h-full object-cover"
+                />
+                <div class="absolute inset-0 bg-gradient-to-t from-dark-900 via-dark-900/30 to-transparent" />
+                <div class="absolute inset-x-0 bottom-0 p-6 md:p-8">
+                  <div class="flex flex-wrap items-center gap-4">
+                    <div class="flex items-center gap-2 rounded-full border border-primary/30 bg-dark-900/80 px-4 py-2 text-sm text-primary backdrop-blur-sm">
+                      <Icon icon="lucide:users" class="text-base" />
+                      Up to 120 people
+                    </div>
+                    <div class="flex items-center gap-2 rounded-full border border-secondary/30 bg-dark-900/80 px-4 py-2 text-sm text-secondary backdrop-blur-sm">
+                      <Icon icon="lucide:monitor" class="text-base" />
+                      2 Projectors
+                    </div>
+                    <div class="flex items-center gap-2 rounded-full border border-primary/30 bg-dark-900/80 px-4 py-2 text-sm text-primary backdrop-blur-sm">
+                      <Icon icon="lucide:layout-grid" class="text-base" />
+                      L-shaped room
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </Reveal>
+
+            <div class="grid md:grid-cols-2 gap-6">
+              <For each={mainAreaFeatures}>
+                {(feature, index) => (
                   <Reveal delay={index() * 80}>
                     <div class="h-full rounded-2xl border border-border bg-dark-800/80 p-6 shadow-[0_24px_80px_rgba(0,0,0,0.22)] transition-colors hover:border-primary/40">
                       <div class="flex items-center justify-center w-14 h-14 rounded-2xl bg-primary/10 text-primary mb-6 shrink-0">
-                        <Icon icon={facility.icon} class="text-2xl" />
+                        <Icon icon={feature.icon} class="text-2xl" />
                       </div>
-                      <h3 class="text-xl font-display font-semibold text-text-primary mb-3">{facility.title}</h3>
-                      <p class="text-text-secondary leading-relaxed">{facility.description}</p>
+                      <h3 class="text-xl font-display font-semibold text-text-primary mb-3">{feature.title}</h3>
+                      <p class="text-text-secondary leading-relaxed">{feature.description}</p>
                     </div>
                   </Reveal>
                 )}
@@ -233,8 +258,160 @@ export default function SpacePage() {
             </div>
           </section>
 
+          {/* ── The Living Room ────────────────────────────────────── */}
           <section class="mb-20">
-            <SectionHeader title="A/V & Stage Equipment" subtitle="Production support for talks, performances, recordings, livestreams, and polished community broadcasts." />
+            <SectionHeader
+              title="The Living Room"
+              subtitle="Because you should feel at home."
+            />
+
+            <div class="grid lg:grid-cols-5 gap-6 items-stretch">
+              <Reveal class="lg:col-span-3">
+                <div class="relative h-full min-h-[300px] rounded-2xl overflow-hidden border border-border bg-dark-800">
+                  <img
+                    src="/images/IMG_3250.JPG"
+                    alt="Base42 living room with sofa, bean bags, and 4K TV"
+                    class="w-full h-full object-cover"
+                  />
+                  <div class="absolute inset-0 bg-gradient-to-t from-dark-900 via-dark-900/20 to-transparent" />
+                  <div class="absolute inset-x-0 bottom-0 p-6 md:p-8">
+                    <p class="text-xs uppercase tracking-[0.24em] text-secondary/80 mb-2">Where ideas brew</p>
+                    <p class="text-lg text-text-primary font-display font-semibold max-w-md">
+                      Sofa, bean bags, 4K TV, game consoles, and a DIY tire table. The kind of room where side projects get started at midnight.
+                    </p>
+                  </div>
+                </div>
+              </Reveal>
+
+              <div class="lg:col-span-2 flex flex-col gap-6">
+                <For each={livingRoomFeatures}>
+                  {(feature, index) => (
+                    <Reveal delay={index() * 100}>
+                      <div class="rounded-2xl border border-border bg-dark-800 p-6 transition-colors hover:border-secondary/40">
+                        <div class="flex items-start gap-4">
+                          <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-secondary/10 text-secondary">
+                            <Icon icon={feature.icon} class="text-2xl" />
+                          </div>
+                          <div>
+                            <h3 class="text-lg font-display font-semibold text-text-primary mb-1">{feature.title}</h3>
+                            <p class="text-sm text-text-secondary leading-relaxed">{feature.description}</p>
+                          </div>
+                        </div>
+                      </div>
+                    </Reveal>
+                  )}
+                </For>
+              </div>
+            </div>
+          </section>
+
+          {/* ── Electronics Workshop ───────────────────────────────── */}
+          <section class="mb-20">
+            <div class="grid lg:grid-cols-2 gap-6 items-stretch">
+              <Reveal>
+                <div class="h-full rounded-2xl border border-border bg-gradient-to-br from-dark-800 to-dark-900 p-8 relative overflow-hidden">
+                  <div class="absolute inset-0 bg-grid opacity-20" />
+                  <div class="absolute -right-16 -top-16 h-40 w-40 rounded-full bg-primary/10 blur-3xl" />
+                  <div class="absolute -left-12 -bottom-12 h-40 w-40 rounded-full bg-secondary/10 blur-3xl" />
+                  <div class="relative">
+                    <div class="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-dark-900/70 px-4 py-2 text-xs uppercase tracking-[0.28em] text-primary mb-6">
+                      <Icon icon="lucide:cpu" class="text-sm" />
+                      Maker space
+                    </div>
+                    <SectionHeader
+                      title="Electronics Workshop"
+                      subtitle="If we don't have it, bring it and leave it."
+                      align="left"
+                      class="mb-6"
+                    />
+                    <p class="text-text-secondary leading-relaxed mb-6">
+                      A full electronics workshop with all kinds of components, soldering kits, lights, diodes, chips — you name it.
+                      Bring your own project or start something new. Parts that get left behind become community resources.
+                    </p>
+                    <div class="flex flex-wrap gap-3">
+                      <For each={["Soldering Stations", "Components Library", "Oscilloscopes", "Power Supplies", "Breadboards", "Multimeters"]}>
+                        {tag => (
+                          <span class="rounded-full border border-primary/20 bg-primary/10 px-4 py-2 text-sm font-medium text-primary">
+                            {tag}
+                          </span>
+                        )}
+                      </For>
+                    </div>
+                  </div>
+                </div>
+              </Reveal>
+
+              <Reveal delay={120}>
+                <div class="relative h-full min-h-[300px] rounded-2xl overflow-hidden border border-border bg-dark-800">
+                  <img
+                    src="/images/electronics.jpg"
+                    alt="Electronics workshop with soldering stations and components at Base42"
+                    class="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                  />
+                  <div class="absolute inset-0 bg-gradient-to-t from-dark-900 via-dark-900/10 to-transparent" />
+                  <div class="absolute inset-x-0 bottom-0 p-6">
+                    <p class="text-xs uppercase tracking-[0.24em] text-primary/80 mb-2">Workshop</p>
+                    <h3 class="text-lg font-display font-semibold text-text-primary">Solder, prototype, iterate</h3>
+                  </div>
+                </div>
+              </Reveal>
+            </div>
+          </section>
+
+          {/* ── 3D Printing Station ────────────────────────────────── */}
+          <section class="mb-20">
+            <div class="grid lg:grid-cols-2 gap-6 items-stretch">
+              <Reveal>
+                <div class="relative h-full min-h-[300px] rounded-2xl overflow-hidden border border-border bg-dark-800">
+                  <img
+                    src="/images/3d-printer-jacuzzi.jpg"
+                    alt="3D printing station at Base42 connected to a server"
+                    class="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                  />
+                  <div class="absolute inset-0 bg-gradient-to-t from-dark-900 via-dark-900/10 to-transparent" />
+                  <div class="absolute inset-x-0 bottom-0 p-6">
+                    <p class="text-xs uppercase tracking-[0.24em] text-secondary/80 mb-2">Fabrication</p>
+                    <h3 class="text-lg font-display font-semibold text-text-primary">From file to physical object</h3>
+                  </div>
+                </div>
+              </Reveal>
+
+              <Reveal delay={120}>
+                <div class="h-full rounded-2xl border border-border bg-dark-800 p-8 flex flex-col justify-center">
+                  <div class="flex items-center justify-center w-14 h-14 rounded-2xl bg-secondary/10 text-secondary mb-6 shrink-0">
+                    <Icon icon="lucide:printer" class="text-2xl" />
+                  </div>
+                  <h3 class="text-2xl font-display font-semibold text-text-primary mb-4">3D Printing Station</h3>
+                  <p class="text-text-secondary leading-relaxed mb-6">
+                    Ready-to-use 3D printers hooked up to a server. Send your prints from the space, or if you're feeling
+                    brave — send them from home. Prototypes, enclosures, replacement parts, art projects, whatever you need
+                    to materialize.
+                  </p>
+                  <div class="flex items-center gap-6 text-sm text-text-muted">
+                    <div class="flex items-center gap-2">
+                      <Icon icon="lucide:wifi" class="text-secondary text-lg" />
+                      <span>Remote printing</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                      <Icon icon="lucide:server" class="text-secondary text-lg" />
+                      <span>Server-connected</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                      <Icon icon="lucide:clock" class="text-secondary text-lg" />
+                      <span>24/7 queue</span>
+                    </div>
+                  </div>
+                </div>
+              </Reveal>
+            </div>
+          </section>
+
+          {/* ── A/V & Stage Equipment ──────────────────────────────── */}
+          <section class="mb-20">
+            <SectionHeader
+              title="A/V & Stage Equipment"
+              subtitle="Production support for talks, performances, recordings, livestreams, and polished community broadcasts."
+            />
             <div class="grid lg:grid-cols-2 gap-6">
               <For each={equipmentCategories}>
                 {(category, index) => (
@@ -266,6 +443,7 @@ export default function SpacePage() {
             </div>
           </section>
 
+          {/* ── Recording & Production ─────────────────────────────── */}
           <section class="mb-20">
             <div class="grid lg:grid-cols-2 gap-6 items-stretch">
               <Reveal>
@@ -322,6 +500,43 @@ export default function SpacePage() {
             </div>
           </section>
 
+          {/* ── Hidden Gems ────────────────────────────────────────── */}
+          <section class="mb-20">
+            <SectionHeader
+              title="The Hidden Gems"
+              subtitle="Every hackerspace has its quirks. These are ours."
+            />
+
+            <div class="grid md:grid-cols-2 gap-6">
+              <For each={hiddenGems}>
+                {(gem, index) => (
+                  <Reveal delay={index() * 120}>
+                    <div class="group h-full rounded-2xl border border-border bg-dark-800 overflow-hidden">
+                      <div class="relative aspect-video overflow-hidden">
+                        <img
+                          src={gem.image}
+                          alt={gem.imageAlt}
+                          class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        />
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark-900 via-dark-900/20 to-transparent" />
+                        <div class="absolute top-4 left-4">
+                          <div class="flex items-center justify-center w-10 h-10 rounded-xl bg-dark-900/80 text-primary backdrop-blur-sm">
+                            <Icon icon={gem.icon} class="text-xl" />
+                          </div>
+                        </div>
+                      </div>
+                      <div class="p-6">
+                        <h3 class="text-xl font-display font-semibold text-text-primary mb-3">{gem.title}</h3>
+                        <p class="text-text-secondary leading-relaxed">{gem.description}</p>
+                      </div>
+                    </div>
+                  </Reveal>
+                )}
+              </For>
+            </div>
+          </section>
+
+          {/* ── Location ───────────────────────────────────────────── */}
           <section class="mb-20">
             <SectionHeader title="Location" subtitle="Easy to find, easy to remember, and designed to feel like Base42 the moment you walk in." />
             <div class="grid lg:grid-cols-2 gap-6 items-stretch">
@@ -352,10 +567,15 @@ export default function SpacePage() {
                     <p class="text-xs uppercase tracking-[0.28em] text-primary mb-4">Why it works</p>
                     <h3 class="text-2xl font-display font-semibold text-text-primary mb-4">A space tuned for community momentum</h3>
                     <p class="text-text-secondary leading-relaxed mb-6">
-                      The layout supports both structured programming and spontaneous collisions: a talk in one corner, a prototype on a bench, a planning call behind a door, and a coffee-fueled idea turning into a project by midnight.
+                      The layout supports both structured programming and spontaneous collisions: a talk in one corner,
+                      a prototype on a bench, a planning call behind a door, and a coffee-fueled idea turning into a project
+                      by midnight.
                     </p>
                     <p class="text-text-secondary leading-relaxed">
-                      For partnerships, visits, or logistics, reach out at <a href="mailto:hello@42.mk" class="text-primary hover:text-primary-hover transition-colors">hello@42.mk</a>.
+                      For partnerships, visits, or logistics, reach out at{" "}
+                      <a href="mailto:hello@42.mk" class="text-primary hover:text-primary-hover transition-colors">
+                        hello@42.mk
+                      </a>.
                     </p>
                   </div>
                 </div>
@@ -363,6 +583,7 @@ export default function SpacePage() {
             </div>
           </section>
 
+          {/* ── Use the Space ──────────────────────────────────────── */}
           <section class="mb-20">
             <SectionHeader title="Use the Space" subtitle="Come for an event, book the venue, or become part of the people who keep it alive." />
             <div class="grid md:grid-cols-2 gap-6">

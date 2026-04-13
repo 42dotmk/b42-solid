@@ -21,6 +21,7 @@ import {
 import type { Event } from "~/types";
 import type { YouTubeVideo } from "~/types";
 import { getUpcomingEvents } from "~/lib/api";
+import { useDiscordCounts } from "~/lib/discord";
 import { getChannelVideos } from "~/lib/youtube";
 
 function EventCardSkeleton() {
@@ -186,6 +187,15 @@ export default function Home() {
 
   const [selectedFacility, setSelectedFacility] = createSignal(0);
 
+  const { online: discordOnline, members: discordMembers } = useDiscordCounts();
+
+  const liveStats = () =>
+    stats.map(s =>
+      s.label === "Discord Members" && discordMembers() !== null
+        ? { ...s, value: discordMembers()! }
+        : s,
+    );
+
   const [formState, setFormState] = createSignal<"idle" | "loading" | "success" | "error">("idle");
   const [formData, setFormData] = createStore({
     name: "",
@@ -216,8 +226,8 @@ export default function Home() {
             <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent animate-scan-line" />
           </div>
           <div class="hidden lg:block absolute inset-y-0 right-0 w-1/2">
-            <img src="/images/IMG_3191.jpg" alt="" class="w-full h-full object-cover object-center" />
-            <div class="absolute inset-0 bg-gradient-to-r from-dark-900 via-dark-900/70 to-dark-900/30" />
+            <img src="/images/IMG_3440.jpeg" alt="" class="w-full h-full object-cover object-center" />
+            <div class="absolute inset-0" style={{ background: "linear-gradient(to right, var(--color-dark-900) 0%, rgba(250, 225, 39, 0.25) 15%, rgba(250, 225, 39, 0.12) 40%, transparent 70%)" }} />
             <div class="absolute inset-0 bg-gradient-to-t from-dark-900 via-transparent to-dark-900/50" />
           </div>
         </div>
@@ -247,7 +257,7 @@ export default function Home() {
                   </a>
                   <A href="/events">
                     <Button size="lg" variant="outline">
-                      Upcoming Events
+                      Event Calendar
                       <Icon icon="lucide:external-link" class="w-4 h-4" />
                     </Button>
                   </A>
@@ -257,9 +267,9 @@ export default function Home() {
               <Reveal delay={800}>
                 <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-dark-700/50 border border-border text-sm text-text-muted">
                   <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-                  <span>217 online</span>
+                  <span>{discordOnline() ?? 207} online</span>
                   <span class="text-border">·</span>
-                  <span>1,076 members</span>
+                  <span>{(discordMembers() ?? 1122).toLocaleString()} members</span>
                 </div>
               </Reveal>
             </div>
@@ -360,11 +370,10 @@ export default function Home() {
                     <button
                       type="button"
                       onClick={() => setSelectedFacility(index())}
-                      class={`flex items-center gap-3 rounded-xl border p-4 transition-all duration-200 text-left shrink-0 w-56 sm:w-auto cursor-pointer ${
-                        index() === selectedFacility()
-                          ? "border-primary bg-primary/10"
-                          : "border-border bg-dark-700 hover:border-primary/30"
-                      }`}
+                      class={`flex items-center gap-3 rounded-xl border p-4 transition-all duration-200 text-left shrink-0 w-56 sm:w-auto cursor-pointer ${index() === selectedFacility()
+                        ? "border-primary bg-primary/10"
+                        : "border-border bg-dark-700 hover:border-primary/30"
+                        }`}
                     >
                       <div class={`p-2 rounded-lg shrink-0 ${index() === selectedFacility() ? "bg-primary/20 text-primary" : "bg-dark-600 text-text-muted"}`}>
                         <Icon icon={facility.icon} class="text-lg" />
@@ -381,6 +390,17 @@ export default function Home() {
               </div>
             </div>
           </Reveal>
+
+          <Reveal delay={250}>
+            <div class="mt-8 text-center">
+              <A href="/space">
+                <Button variant="outline" size="lg">
+                  Explore the Full Space
+                  <Icon icon="lucide:arrow-right" class="w-4 h-4" />
+                </Button>
+              </A>
+            </div>
+          </Reveal>
         </div>
       </section>
 
@@ -388,7 +408,7 @@ export default function Home() {
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <Reveal>
             <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
-              <For each={stats}>
+              <For each={liveStats()}>
                 {(stat, index) => (
                   <div class="text-center" style={{ "transition-delay": `${index() * 100}ms` }}>
                     <div class="inline-flex items-center justify-center w-16 h-16 rounded-xl bg-primary/10 text-primary mb-4">
@@ -423,15 +443,19 @@ export default function Home() {
               <div class="flex flex-wrap justify-center gap-6 mb-8">
                 <div class="flex items-center gap-2 text-text-muted">
                   <Icon icon="lucide:users" class="text-xl text-primary" />
-                  <span>Up to 80 people</span>
+                  <span>Up to 120 people</span>
                 </div>
                 <div class="flex items-center gap-2 text-text-muted">
                   <Icon icon="lucide:projector" class="text-xl text-primary" />
-                  <span>A/V Equipment</span>
+                  <span>Full Stage & A/V</span>
                 </div>
                 <div class="flex items-center gap-2 text-text-muted">
                   <Icon icon="lucide:wrench" class="text-xl text-primary" />
-                  <span>Workshop Tools</span>
+                  <span>Workshop & Maker Tools</span>
+                </div>
+                <div class="flex items-center gap-2 text-text-muted">
+                  <Icon icon="lucide:server" class="text-xl text-primary" />
+                  <span>On-site Server Rack</span>
                 </div>
               </div>
               <A href="/book">

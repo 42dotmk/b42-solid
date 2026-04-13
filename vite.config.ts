@@ -11,6 +11,8 @@ export default defineConfig(({ mode }) => {
 
   return {
     server: {
+      host: '0.0.0.0',
+      allowedHosts: true,
       port: 5173,
     },
     plugins: [solidStart(), nitroV2Plugin(), tailwindcss()],

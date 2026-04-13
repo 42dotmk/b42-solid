@@ -58,6 +58,18 @@ export async function getAllEvents(page = 1, pageSize = 9, upcoming = true): Pro
   }
 }
 
+export async function getEventCount(): Promise<number | null> {
+  try {
+    const url = `${API_URL}/events?pagination[pageSize]=1&fields[0]=id`;
+    const res = await fetchWithTimeout(url);
+    if (!res.ok) return null;
+    const data: StrapiResponse<Event> = await res.json();
+    return data.meta.pagination.total;
+  } catch {
+    return null;
+  }
+}
+
 export async function getEventBySlug(slug: string) {
   try {
     const url = `${API_URL}/events?populate=*&filters[slug][$eq]=${slug}`;

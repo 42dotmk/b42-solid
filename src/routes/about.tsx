@@ -1,14 +1,24 @@
 import { Icon } from "@iconify-icon/solid";
 import { Meta, Title } from "@solidjs/meta";
 import { A } from "@solidjs/router";
-import { For } from "solid-js";
+import { For, createSignal, onMount } from "solid-js";
 import CountUp from "~/components/common/CountUp";
 import Reveal from "~/components/common/Reveal";
 import Button from "~/components/ui/Button";
 import SectionHeader from "~/components/ui/SectionHeader";
 import { aboutTimeline, aboutValues, siteMeta } from "~/data/site";
+import { useDiscordCounts } from "~/lib/discord";
+import { getEventCount } from "~/lib/api";
 
 export default function About() {
+  const { members: discordMembers } = useDiscordCounts();
+
+  const [eventCount, setEventCount] = createSignal<number | null>(null);
+  onMount(async () => {
+    const count = await getEventCount();
+    if (count !== null) setEventCount(count);
+  });
+
   return (
     <>
       <Title>{siteMeta.titleTemplate("About")}</Title>
@@ -52,14 +62,14 @@ export default function About() {
                     <div class="flex items-center gap-4">
                       <div class="text-center">
                         <div class="text-2xl font-display font-bold text-primary">
-                          <CountUp end={1076} />
+                          <CountUp end={discordMembers() ?? 1076} />
                         </div>
                         <div class="text-xs text-text-muted">Members</div>
                       </div>
                       <div class="h-10 w-px bg-border" />
                       <div class="text-center">
                         <div class="text-2xl font-display font-bold text-secondary">
-                          <CountUp end={50} suffix="+" />
+                          <CountUp end={eventCount() ?? 50} suffix={eventCount() !== null ? "" : "+"} />
                         </div>
                         <div class="text-xs text-text-muted">Events</div>
                       </div>
@@ -179,7 +189,8 @@ export default function About() {
                     <h3 class="text-2xl font-display font-bold text-text-primary mt-2 mb-4">Where We're Going</h3>
                     <div class="space-y-4 text-text-secondary leading-relaxed">
                       <p>
-                        Today, Base42 is home to over 1,000 community members. We host 50+ events per year and collaborate
+                        Today, Base42 is home to over {(Math.floor((discordMembers() ?? 1000) / 1000) * 1000).toLocaleString()} community members.
+                        We host {eventCount() !== null ? `${eventCount()}` : "50+"} events per year and collaborate
                         with partner organizations across Macedonia.
                       </p>
                       <p>
