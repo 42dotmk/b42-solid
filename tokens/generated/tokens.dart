@@ -15,11 +15,11 @@ abstract class B42Tokens {
   static const Color colorSecondaryHover = Color.fromARGB(255, 92, 241, 241);
   static const Color colorSecondaryMuted = Color.fromARGB(26, 43, 237, 237);
   static const Color colorSecondaryGlow = Color.fromARGB(102, 43, 237, 237);
-  static const Color colorDark900 = Color.fromARGB(255, 21, 28, 31);
-  static const Color colorDark800 = Color.fromARGB(255, 28, 36, 40);
-  static const Color colorDark700 = Color.fromARGB(255, 35, 45, 50);
-  static const Color colorDark600 = Color.fromARGB(255, 42, 54, 60);
   static const Color colorDark500 = Color.fromARGB(255, 55, 70, 78);
+  static const Color colorDark600 = Color.fromARGB(255, 42, 54, 60);
+  static const Color colorDark700 = Color.fromARGB(255, 35, 45, 50);
+  static const Color colorDark800 = Color.fromARGB(255, 28, 36, 40);
+  static const Color colorDark900 = Color.fromARGB(255, 21, 28, 31);
   static const Color colorTextPrimary = Color.fromARGB(255, 255, 255, 255);
   static const Color colorTextSecondary = Color.fromARGB(179, 255, 255, 255);
   static const Color colorTextMuted = Color.fromARGB(128, 255, 255, 255);
@@ -30,18 +30,18 @@ abstract class B42Tokens {
   static const Color colorSemanticError = Color.fromARGB(255, 239, 68, 68);
 
   // font
-  static const String fontDisplay = 'Space Grotesk';
-  static const List<String> fontDisplayFallback = ['Space Grotesk', 'system-ui', 'sans-serif'];
+  static const String fontDisplay = 'JetBrains Mono';
+  static const List<String> fontDisplayFallback = ['JetBrains Mono', 'system-ui', 'sans-serif'];
   static const String fontBody = 'Inter';
   static const List<String> fontBodyFallback = ['Inter', 'system-ui', 'sans-serif'];
   static const String fontMono = 'JetBrains Mono';
   static const List<String> fontMonoFallback = ['JetBrains Mono', 'monospace'];
 
   // duration
-  static const Duration durationGlowPulse = Duration(milliseconds: 2000);
-  static const Duration durationSlideUp = Duration(milliseconds: 500);
-  static const Duration durationFadeIn = Duration(milliseconds: 300);
+  static const Duration durationGlowpulse = Duration(milliseconds: 2000);
+  static const Duration durationSlideup = Duration(milliseconds: 500);
+  static const Duration durationFadein = Duration(milliseconds: 300);
   static const Duration durationFloat = Duration(milliseconds: 6000);
-  static const Duration durationScanLine = Duration(milliseconds: 8000);
+  static const Duration durationScanline = Duration(milliseconds: 8000);
   static const Duration durationMarquee = Duration(milliseconds: 30000);
 }

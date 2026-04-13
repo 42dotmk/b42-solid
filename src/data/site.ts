@@ -44,7 +44,9 @@ export const siteMeta = {
 export const navLinks = [
   { label: "Home", href: "/" },
   { label: "About", href: "/about" },
+  { label: "Space", href: "/space" },
   { label: "Events", href: "/events" },
+  { label: "Conferences", href: "/conferences" },
   { label: "Videos", href: "/videos" },
   { label: "Projects", href: "/projects" },
   { label: "Shop", href: "/shop" },
@@ -60,7 +62,9 @@ export const externalLinks = [
 
 export const footerQuickLinks = [
   { label: "About", href: "/#about" },
+  { label: "Space", href: "/space" },
   { label: "Events", href: "/events" },
+  { label: "Conferences", href: "/conferences" },
   { label: "Projects", href: "/#projects" },
   { label: "Contact", href: "/#contact" },
 ];
@@ -69,6 +73,10 @@ export const footerResources = [
   { label: "Blog", href: "https://blog.42.mk", external: true },
   { label: "Wiki", href: "https://wiki.42.mk", external: true },
   { label: "Book Space", href: "/book", external: false },
+  { label: "Membership", href: "/membership", external: false },
+  { label: "Volunteering", href: "/volunteering", external: false },
+  { label: "Codex", href: "/codex", external: false },
+  { label: "Media Kit", href: "/media-kit", external: false },
 ];
 
 export const socials: { icon: IconComponent; href: string; label: string }[] = [
@@ -436,6 +444,136 @@ export const difficultyColors: Record<string, string> = {
   Intermediate: "text-yellow-400",
   Advanced: "text-red-400",
 };
+
+// ── Media Kit ──────────────────────────────────────────────────────────
+
+export const brandColors = [
+  {
+    name: "Volt",
+    hex: "#FAE127",
+    rgb: "250, 225, 39",
+    cssVar: "--color-primary",
+    usage: "Main brand accent. Used for CTAs, highlights, and interactive elements.",
+  },
+  {
+    name: "Circuit",
+    hex: "#2BEDED",
+    rgb: "43, 237, 237",
+    cssVar: "--color-secondary",
+    usage: "Complementary accent. Used for secondary highlights and visual variety.",
+  },
+  {
+    name: "Void",
+    hex: "#151C1F",
+    rgb: "21, 28, 31",
+    cssVar: "--color-dark-900",
+    usage: "Primary background. The base surface color across the entire site.",
+  },
+  {
+    name: "Carbon",
+    hex: "#1C2428",
+    rgb: "28, 36, 40",
+    cssVar: "--color-dark-800",
+    usage: "Elevated surfaces. Used for cards, panels, and the footer.",
+  },
+  {
+    name: "Slate",
+    hex: "#232D32",
+    rgb: "35, 45, 50",
+    cssVar: "--color-dark-700",
+    usage: "Interactive surfaces. Used for hover states and input fields.",
+  },
+  {
+    name: "Signal",
+    hex: "#FFFFFF",
+    rgb: "255, 255, 255",
+    cssVar: "--color-text-primary",
+    usage: "Primary text color on dark backgrounds.",
+  },
+];
+
+export const brandTypography = [
+  {
+    name: "JetBrains Mono",
+    role: "Display / Headings",
+    weights: "400, 500, 700",
+    sample: "The Answer to Everything",
+    cssVar: "--font-display",
+  },
+  {
+    name: "IBM Plex Sans",
+    role: "Body / UI",
+    weights: "400, 500, 600, 700",
+    sample: "A hackerspace for builders and the curious.",
+    cssVar: "--font-body",
+  },
+  {
+    name: "JetBrains Mono",
+    role: "Code / Technical",
+    weights: "400, 500, 700",
+    sample: "console.log('hello, base42')",
+    cssVar: "--font-mono",
+  },
+];
+
+export const brandAssets: { name: string; description: string; path: string; format: string; icon: IconComponent; previewBg: string }[] = [
+  {
+    name: "Logo — Full Color",
+    description: "Primary logo with wordmark in Volt and Circuit. Use on dark backgrounds.",
+    path: "/images/logo.svg",
+    format: "SVG",
+    icon: "lucide:image",
+    previewBg: "bg-dark-900",
+  },
+  {
+    name: "Logo — Icon Only",
+    description: "Compact mark without wordmark. Use where space is limited.",
+    path: "/favicon.svg",
+    format: "SVG",
+    icon: "lucide:diamond",
+    previewBg: "bg-dark-900",
+  },
+  {
+    name: "Logo — White",
+    description: "Monochrome white mark. Use on dark or colored backgrounds.",
+    path: "/images/logo-white.svg",
+    format: "SVG",
+    icon: "lucide:moon",
+    previewBg: "bg-dark-900",
+  },
+  {
+    name: "Logo — Black",
+    description: "Monochrome black mark. Use on white or light backgrounds.",
+    path: "/images/logo-black.svg",
+    format: "SVG",
+    icon: "lucide:sun",
+    previewBg: "bg-white",
+  },
+];
+
+export const brandGuidelines = {
+  dos: [
+    "Use the logo on dark backgrounds (#151C1F or darker)",
+    "Maintain clear space equal to the height of the '4' around the logo",
+    "Use the official colors when reproducing the logo",
+    "Link back to 42.mk when using the logo digitally",
+  ],
+  donts: [
+    "Place the logo on light or busy backgrounds without a dark container",
+    "Alter the logo colors, proportions, or orientation",
+    "Add effects like drop shadows, gradients, or outlines to the logo",
+    "Use the logo to imply Base42 endorsement without permission",
+  ],
+};
+
+export const brandTermsOfUse = [
+  "The Base42 name, logo, and brand assets are the property of the Base42 community.",
+  "You may use these assets for editorial, journalistic, or community purposes — such as writing about Base42, announcing a partnership, or promoting a Base42 event.",
+  "Modification of the logo is not permitted. You may resize it proportionally.",
+  "Use of the Base42 brand to imply endorsement, sponsorship, or affiliation requires prior written approval. Contact us at hello@42.mk.",
+  "These assets may not be used on merchandise or commercial products without explicit permission.",
+  "When in doubt, reach out. We're friendly: hello@42.mk.",
+];
 
 export const communityActions = [
   {

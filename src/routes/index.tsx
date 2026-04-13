@@ -1,8 +1,7 @@
 import { Icon } from "@iconify-icon/solid";
 import { Meta, Title } from "@solidjs/meta";
-import { createAsync } from "@solidjs/router";
 import { A } from "@solidjs/router";
-import { For, Show, createSignal, onMount } from "solid-js";
+import { For, Show, createSignal, onCleanup, onMount } from "solid-js";
 import { createStore } from "solid-js/store";
 import CountUp from "~/components/common/CountUp";
 import Reveal from "~/components/common/Reveal";
@@ -180,6 +179,13 @@ function LatestVideosSection() {
 }
 
 export default function Home() {
+  const hackWords = ["hack", "build", "ship", "break", "make", "code", "fork", "debug", "explore", "create", "tinker", "teach"];
+  const [hackIndex, setHackIndex] = createSignal(0);
+  const hackInterval = setInterval(() => setHackIndex(i => (i + 1) % hackWords.length), 250);
+  onCleanup(() => clearInterval(hackInterval));
+
+  const [selectedFacility, setSelectedFacility] = createSignal(0);
+
   const [formState, setFormState] = createSignal<"idle" | "loading" | "success" | "error">("idle");
   const [formData, setFormData] = createStore({
     name: "",
@@ -201,64 +207,65 @@ export default function Home() {
       <Title>{siteMeta.defaultTitle}</Title>
       <Meta name="description" content={siteMeta.description} />
 
-      <section class="relative min-h-screen flex items-center justify-center overflow-hidden">
+
+      <section class="relative min-h-screen flex flex-col overflow-hidden">
         <div class="absolute inset-0 bg-dark-900">
           <div class="absolute inset-0 bg-grid opacity-50" />
           <div class="absolute inset-0 gradient-radial opacity-30" />
           <div class="absolute inset-0 overflow-hidden pointer-events-none">
             <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent animate-scan-line" />
           </div>
+          <div class="hidden lg:block absolute inset-y-0 right-0 w-1/2">
+            <img src="/images/IMG_3191.jpg" alt="" class="w-full h-full object-cover object-center" />
+            <div class="absolute inset-0 bg-gradient-to-r from-dark-900 via-dark-900/70 to-dark-900/30" />
+            <div class="absolute inset-0 bg-gradient-to-t from-dark-900 via-transparent to-dark-900/50" />
+          </div>
         </div>
 
-        <div class="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <Reveal duration={800}>
-            <div class="mb-8 inline-block">
-              <img
-                src="/images/logo.svg"
-                alt="Base42"
-                class="w-64 sm:w-80 md:w-96 h-auto drop-shadow-[0_0_25px_rgba(250,225,39,0.4)] hover:drop-shadow-[0_0_35px_rgba(43,237,237,0.5)] transition-all duration-500"
-              />
+        <div class="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex-1 flex flex-col">
+          <div class="grid lg:grid-cols-2 flex-1 items-center">
+            <div class="text-left py-12">
+              <Reveal delay={200}>
+                <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-display font-bold text-text-primary mb-4">
+                  The <span class="text-primary">Community</span><br /> of <span class="text-secondary">Communities</span>
+                </h1>
+              </Reveal>
+
+              <Reveal delay={400}>
+                <p class="text-lg sm:text-xl text-text-secondary max-w-xl mb-6">IT, geek culture and beyond!</p>
+              </Reveal>
+
+              <Reveal delay={600}>
+                <div class="flex flex-col sm:flex-row items-start gap-4 mb-6">
+                  <a href="https://discord.gg/424xxTZVYX" target="_blank" rel="noopener noreferrer">
+                    <Button size="lg" variant="secondary">
+                      <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z" />
+                      </svg>
+                      Join Discord
+                    </Button>
+                  </a>
+                  <A href="/events">
+                    <Button size="lg" variant="outline">
+                      Upcoming Events
+                      <Icon icon="lucide:external-link" class="w-4 h-4" />
+                    </Button>
+                  </A>
+                </div>
+              </Reveal>
+
+              <Reveal delay={800}>
+                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-dark-700/50 border border-border text-sm text-text-muted">
+                  <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+                  <span>217 online</span>
+                  <span class="text-border">·</span>
+                  <span>1,076 members</span>
+                </div>
+              </Reveal>
             </div>
-          </Reveal>
 
-          <Reveal delay={200}>
-            <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-display font-bold text-text-primary mb-4">
-              A place for <span class="text-gradient">builders</span>,<br />
-              and the <span class="text-secondary">curious</span>
-            </h1>
-          </Reveal>
-
-          <Reveal delay={400}>
-            <p class="text-lg sm:text-xl text-text-secondary mb-8 max-w-2xl mx-auto">Hackerspace in Skopje, Macedonia</p>
-          </Reveal>
-
-          <Reveal delay={600}>
-            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <a href="https://discord.gg/424xxTZVYX" target="_blank" rel="noopener noreferrer">
-                <Button size="lg" variant="secondary">
-                  <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z" />
-                  </svg>
-                  Join Discord
-                </Button>
-              </a>
-              <A href="/events">
-                <Button size="lg" variant="outline">
-                  Upcoming Events
-                  <Icon icon="lucide:external-link" class="w-4 h-4" />
-                </Button>
-              </A>
-            </div>
-          </Reveal>
-
-          <Reveal delay={800}>
-            <div class="mt-12 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-dark-700/50 border border-border text-sm text-text-muted">
-              <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-              <span>217 online</span>
-              <span class="text-border">·</span>
-              <span>1,076 members</span>
-            </div>
-          </Reveal>
+            <div class="hidden lg:block" />
+          </div>
         </div>
 
         <div class="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
@@ -316,29 +323,64 @@ export default function Home() {
       <section id="facilities" class="py-24 bg-dark-900">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeader title="Our Space" subtitle="Everything you need to build, learn, and connect" />
-          <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            <For each={facilities}>
-              {(facility, index) => (
-                <Reveal delay={index() * 100}>
-                  <div class="group relative rounded-xl overflow-hidden bg-dark-700 border border-border hover:border-primary/50 transition-all duration-300 hover:-translate-y-1">
-                    <div class="relative aspect-[4/3] overflow-hidden">
-                      <img src={facility.image} alt={facility.title} class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
-                      <div class="absolute inset-0 bg-gradient-to-t from-dark-900 via-dark-900/50 to-transparent" />
-                    </div>
-                    <div class="absolute bottom-0 left-0 right-0 p-5">
-                      <div class="flex items-center gap-3 mb-2">
-                        <div class="p-2 rounded-lg bg-primary/10 text-primary">
-                          <Icon icon={facility.icon} class="w-5 h-5" />
-                        </div>
-                        <h3 class="font-display font-semibold text-text-primary">{facility.title}</h3>
-                      </div>
-                      <p class="text-sm text-text-muted">{facility.description}</p>
-                    </div>
+
+          <Reveal>
+            <div class="relative aspect-video md:aspect-[21/9] rounded-2xl overflow-hidden border border-border bg-dark-800 mb-6">
+              <For each={facilities}>
+                {(facility, i) => (
+                  <img
+                    src={facility.image}
+                    alt={facility.title}
+                    class={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${i() === selectedFacility() ? "opacity-100" : "opacity-0"}`}
+                  />
+                )}
+              </For>
+              <div class="absolute inset-0 bg-gradient-to-t from-dark-900 via-dark-900/40 to-transparent" />
+              <div class="absolute inset-x-0 bottom-0 p-6 md:p-8">
+                <div class="flex items-center gap-3 mb-2">
+                  <div class="p-2 rounded-lg bg-primary/10 text-primary backdrop-blur-sm">
+                    <Icon icon={facilities[selectedFacility()].icon} class="text-xl" />
                   </div>
-                </Reveal>
-              )}
-            </For>
-          </div>
+                  <h3 class="text-xl md:text-2xl font-display font-semibold text-text-primary">
+                    {facilities[selectedFacility()].title}
+                  </h3>
+                </div>
+                <p class="text-text-secondary max-w-lg">
+                  {facilities[selectedFacility()].description}
+                </p>
+              </div>
+            </div>
+          </Reveal>
+
+          <Reveal delay={150}>
+            <div class="overflow-x-auto scrollbar-hide -mx-4 px-4 sm:mx-0 sm:px-0">
+              <div class="flex gap-3 w-max sm:w-full sm:grid sm:grid-cols-4">
+                <For each={facilities}>
+                  {(facility, index) => (
+                    <button
+                      type="button"
+                      onClick={() => setSelectedFacility(index())}
+                      class={`flex items-center gap-3 rounded-xl border p-4 transition-all duration-200 text-left shrink-0 w-56 sm:w-auto cursor-pointer ${
+                        index() === selectedFacility()
+                          ? "border-primary bg-primary/10"
+                          : "border-border bg-dark-700 hover:border-primary/30"
+                      }`}
+                    >
+                      <div class={`p-2 rounded-lg shrink-0 ${index() === selectedFacility() ? "bg-primary/20 text-primary" : "bg-dark-600 text-text-muted"}`}>
+                        <Icon icon={facility.icon} class="text-lg" />
+                      </div>
+                      <div class="min-w-0">
+                        <h3 class={`font-display font-semibold text-sm ${index() === selectedFacility() ? "text-primary" : "text-text-primary"}`}>
+                          {facility.title}
+                        </h3>
+                        <p class="text-xs text-text-muted truncate">{facility.description}</p>
+                      </div>
+                    </button>
+                  )}
+                </For>
+              </div>
+            </div>
+          </Reveal>
         </div>
       </section>
 
@@ -365,13 +407,15 @@ export default function Home() {
       </section>
 
       <section class="py-20 bg-dark-900 relative overflow-hidden">
-        <div class="absolute inset-0 bg-gradient-to-r from-primary/5 via-transparent to-secondary/5" />
+        <div class="absolute inset-0 bg-gradient-to-r from-secondary/5 via-transparent to-primary/5" />
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
           <Reveal>
             <div class="rounded-2xl border border-primary/30 bg-dark-800/50 p-8 md:p-12 text-center">
+
               <div class="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-primary/10 text-primary mb-6">
                 <Icon icon="lucide:calendar-plus" class="text-5xl" />
               </div>
+
               <h2 class="text-3xl md:text-4xl font-display font-bold text-text-primary mb-4">Host Your Event at Base42</h2>
               <p class="text-text-secondary text-lg max-w-2xl mx-auto mb-8">
                 Looking for a space for your meetup, workshop, or hackathon? Our venue is free for community tech events.
@@ -418,6 +462,18 @@ export default function Home() {
       <section id="projects" class="py-24 bg-dark-800">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeader title="Projects" subtitle="Open source initiatives and working groups" />
+
+          <div class="text-center pb-24">
+            <Reveal delay={500}>
+              <h2 class="text-2xl sm:text-3xl md:text-4xl font-display font-bold text-text-primary">
+                Come and{" "}
+                <span class={`underline underline-offset-4 decoration-2 transition-colors ${hackIndex() % 2 === 0 ? "text-primary decoration-primary" : "text-secondary decoration-secondary"}`}>
+                  {hackWords[hackIndex()]}
+                </span>{" "}
+                Base42 with us!
+              </h2>
+            </Reveal>
+          </div>
           <div class="grid md:grid-cols-2 gap-6">
             <For each={homeProjects}>
               {(project, index) => (

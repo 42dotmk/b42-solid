@@ -175,7 +175,7 @@ export default function ProjectsPage() {
           <section class="mt-20">
             <Reveal>
               <div class="relative rounded-2xl overflow-hidden">
-                <div class="absolute inset-0 bg-gradient-to-r from-primary/20 via-dark-800 to-secondary/20" />
+                <div class="absolute inset-0 bg-gradient-to-r from-secondary/20 via-dark-800 to-primary/20" />
                 <div class="relative p-8 md:p-12 text-center">
                   <h2 class="text-3xl font-display font-bold text-text-primary mb-4">Have a Project Idea?</h2>
                   <p class="text-text-secondary text-lg max-w-2xl mx-auto mb-8">

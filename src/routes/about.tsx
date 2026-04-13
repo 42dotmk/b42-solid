@@ -199,7 +199,7 @@ export default function About() {
           <section class="mb-20">
             <Reveal>
               <div class="relative py-12">
-                <div class="absolute inset-0 bg-gradient-to-r from-primary/5 via-transparent to-secondary/5 rounded-2xl" />
+                <div class="absolute inset-0 bg-gradient-to-r from-secondary/5 via-transparent to-primary/5 rounded-2xl" />
                 <blockquote class="relative text-center px-8">
                   <span class="text-6xl text-primary/20 font-serif absolute top-0 left-8">"</span>
                   <p class="text-2xl md:text-3xl font-display text-text-primary max-w-4xl mx-auto leading-relaxed">
